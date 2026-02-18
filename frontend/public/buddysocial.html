@@ -1444,8 +1444,21 @@
        SECTION 6: OUR WHY
     ======================================== */
     #section-our-why {
-      padding: 4rem 2rem 4rem;
+      padding: 4rem 2rem 6rem;
       background: var(--cream);
+      position: relative;
+    }
+
+    #section-our-why::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--green-dark));
+      pointer-events: none;
+      z-index: 1;
     }
 
     .our-why-container {
