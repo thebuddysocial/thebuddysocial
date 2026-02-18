@@ -2043,6 +2043,19 @@
     .carousel-wrapper {
       overflow: hidden;
       padding-bottom: 6rem;
+      position: relative;
+    }
+
+    .carousel-wrapper::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, var(--green-dark));
+      pointer-events: none;
+      z-index: 2;
     }
 
     .carousel-track {
