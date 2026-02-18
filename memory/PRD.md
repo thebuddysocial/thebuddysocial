@@ -1,39 +1,30 @@
 # PRD - The Buddy Social Live Preview
 
 ## Original Problem Statement
-Preview the current GitHub repo (thebuddysocial/thebuddysocial) netlify-deploy/index.html in live preview mode.
+Preview the GitHub repo (thebuddysocial/thebuddysocial) netlify-deploy/index.html in live preview mode. Then make 3 changes: replace Section 2 photos with user's uploaded event photos, redesign services section with creative format, and fix "Our Why" spacing.
 
 ## Architecture
-- **Frontend**: React app serving a full-viewport iframe to the static HTML page
-- **Static Site**: Self-contained `index.html` (HTML + CSS + JS) from `netlify-deploy/`
-- **Backend**: FastAPI (unchanged, not actively used for this task)
-- **Database**: MongoDB (unchanged, not actively used)
+- **Frontend**: React app serving a full-viewport iframe to static HTML
+- **Static Site**: Self-contained `buddysocial.html` in `frontend/public/`
+- **Backend**: FastAPI (unchanged, not actively used)
+- **Database**: MongoDB (unchanged)
 
-## What's Been Implemented (2026-02-18)
-- Cloned the `thebuddysocial/thebuddysocial` GitHub repo
-- Copied `netlify-deploy/index.html` to `frontend/public/buddysocial.html`
-- Modified `App.js` to render a full-viewport iframe pointing to `/buddysocial.html`
-- Updated `App.css` to remove default boilerplate styles and ensure full-page iframe rendering
-- All features working: GSAP animations, custom cursor, scroll effects, 3D tilt cards, navigation, CDN resources
+## What's Been Implemented
 
-## Site Features (from original repo)
-- Responsive design (mobile + desktop)
-- Custom cursor with hover effects
-- GSAP scroll animations with ScrollTrigger
-- 3D tilt effects on cards
-- Auto-scrolling photo carousel
-- Video hero background
-- Photo-inside-text effect for "THE BUDDY SOCIAL"
-- Premium gold accent styling
+### Phase 1 (2026-02-18) - Initial Setup
+- Cloned `thebuddysocial/thebuddysocial` GitHub repo
+- Deployed `netlify-deploy/index.html` as live preview via iframe
 
-## External Dependencies (via CDN)
-- Google Fonts (Bebas Neue, Playfair Display, DM Sans)
-- Font Awesome 6.5.1
-- GSAP 3.12.5 + ScrollTrigger
-
-## Status
-Live preview running at: https://github-viewer-live.preview.emergentagent.com
+### Phase 2 (2026-02-18) - Content & Design Updates
+1. **Section 2 Photos**: Replaced 5 Pexels stock photos with user's actual event photos (customer-assets URLs)
+2. **Services Section Redesign**: Transformed simple list items into premium numbered cards (01, 02, 03) with:
+   - Large display-font numbers with subtle opacity
+   - Bebas Neue headings with gold-accent hover bars
+   - Arrow indicators on hover
+   - Clean divider lines between items
+3. **"Our Why" Spacing Fix**: Reduced padding from 6rem/8rem to 4rem, hero margin from 5rem to 2.5rem, stats header margin from 3rem to 1.5rem
 
 ## Backlog
-- P1: Any UI/content edits the user wants to make to the landing page
-- P2: Connect backend for dynamic features (event management, ticket tracking, etc.)
+- P1: Replace stock service images with user's actual photos
+- P2: Add more event details / dynamic content
+- P2: Connect backend for contact form, event management
