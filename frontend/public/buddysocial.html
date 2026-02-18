@@ -1,0 +1,3651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Buddy Social | Dublin's Community for Students & Graduates</title>
+  <meta name="description" content="Monthly events connecting students, graduates, and early-career professionals in Dublin. Join our cosy community space.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- GSAP for advanced animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <style>
+    /* ========================================
+       CSS VARIABLES & ROOT
+    ======================================== */
+    :root {
+      --green-dark: #2c3e1f;
+      --green: #4d6731;
+      --green-hover: #5a7a3a;
+      --green-light: #8ba77a;
+      --cream: #fbf0cf;
+      --cream-light: #fdf8e8;
+      --cream-dark: #e8d5b5;
+      --brown: #5a4a3a;
+      --warm-gray: #7a6a5a;
+      --gold: #c9a050;
+      --gold-light: #dfc07d;
+      
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-accent: 'Playfair Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+      
+      --shadow-soft: 0 4px 30px rgba(77, 103, 49, 0.08);
+      --shadow-medium: 0 8px 40px rgba(77, 103, 49, 0.12);
+      --shadow-strong: 0 20px 60px rgba(77, 103, 49, 0.18);
+      --shadow-premium: 0 25px 80px rgba(44, 62, 31, 0.25), 0 10px 30px rgba(0, 0, 0, 0.1);
+      
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-medium: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ========================================
+       RESET & BASE
+    ======================================== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--brown);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      cursor: none;
+    }
+
+    /* ========================================
+       CUSTOM CURSOR
+    ======================================== */
+    .cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--green);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference;
+    }
+
+    .cursor-dot {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10001;
+      transform: translate(-50%, -50%);
+    }
+
+    .cursor.hover {
+      width: 50px;
+      height: 50px;
+      border-color: var(--green-light);
+      background: rgba(77, 103, 49, 0.1);
+    }
+
+    .cursor.click {
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    /* Hide custom cursor on mobile */
+    @media (max-width: 768px) {
+      .cursor, .cursor-dot { display: none; }
+      body { cursor: auto; }
+    }
+
+    /* ========================================
+       SCROLL PROGRESS BAR
+    ======================================== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--green), var(--green-light));
+      z-index: 9998;
+      transition: width 0.1s linear;
+    }
+
+    /* ========================================
+       MAGNETIC BUTTON EFFECT
+    ======================================== */
+    .magnetic-wrap {
+      display: inline-block;
+      position: relative;
+    }
+
+    .magnetic-area {
+      position: absolute;
+      inset: -50px;
+      z-index: 1;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ========================================
+       CUSTOM SCROLLBAR
+    ======================================== */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--cream-light);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--green-light);
+      border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--green);
+    }
+
+    /* ========================================
+       FLOATING BACKGROUND SHAPES
+    ======================================== */
+    .floating-shapes {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.3;
+      animation: floatShape 20s ease-in-out infinite;
+    }
+
+    .shape-1 {
+      width: 400px;
+      height: 400px;
+      background: var(--green-light);
+      top: -100px;
+      right: -100px;
+      animation-delay: 0s;
+    }
+
+    .shape-2 {
+      width: 300px;
+      height: 300px;
+      background: var(--cream-dark);
+      bottom: 20%;
+      left: -100px;
+      animation-delay: -5s;
+    }
+
+    .shape-3 {
+      width: 250px;
+      height: 250px;
+      background: var(--green);
+      top: 50%;
+      right: 10%;
+      animation-delay: -10s;
+    }
+
+    @keyframes floatShape {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(30px, -30px) rotate(90deg); }
+      50% { transform: translate(-20px, 20px) rotate(180deg); }
+      75% { transform: translate(10px, -10px) rotate(270deg); }
+    }
+
+    /* ========================================
+       GLITCH TEXT EFFECT
+    ======================================== */
+    .glitch {
+      position: relative;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+
+    .glitch:hover::before {
+      animation: glitch-1 0.3s linear infinite;
+      color: var(--green-light);
+      z-index: -1;
+      opacity: 0.8;
+    }
+
+    .glitch:hover::after {
+      animation: glitch-2 0.3s linear infinite;
+      color: var(--cream);
+      z-index: -2;
+      opacity: 0.8;
+    }
+
+    @keyframes glitch-1 {
+      0% { clip-path: inset(20% 0 60% 0); transform: translate(-3px, 0); }
+      20% { clip-path: inset(60% 0 20% 0); transform: translate(3px, 0); }
+      40% { clip-path: inset(40% 0 40% 0); transform: translate(-3px, 0); }
+      60% { clip-path: inset(80% 0 10% 0); transform: translate(3px, 0); }
+      80% { clip-path: inset(10% 0 80% 0); transform: translate(-3px, 0); }
+      100% { clip-path: inset(20% 0 60% 0); transform: translate(3px, 0); }
+    }
+
+    @keyframes glitch-2 {
+      0% { clip-path: inset(60% 0 20% 0); transform: translate(3px, 0); }
+      20% { clip-path: inset(20% 0 60% 0); transform: translate(-3px, 0); }
+      40% { clip-path: inset(80% 0 10% 0); transform: translate(3px, 0); }
+      60% { clip-path: inset(40% 0 40% 0); transform: translate(-3px, 0); }
+      80% { clip-path: inset(10% 0 80% 0); transform: translate(3px, 0); }
+      100% { clip-path: inset(60% 0 20% 0); transform: translate(-3px, 0); }
+    }
+
+    /* ========================================
+       3D TILT EFFECT FOR CARDS
+    ======================================== */
+    .tilt-card {
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .tilt-card-inner {
+      transition: transform 0.5s ease;
+      transform-style: preserve-3d;
+    }
+
+    .tilt-card .tilt-shine {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    .tilt-card:hover .tilt-shine {
+      opacity: 1;
+    }
+
+    /* ========================================
+       RIPPLE CLICK EFFECT
+    ======================================== */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(139, 167, 122, 0.4);
+      transform: scale(0);
+      animation: rippleEffect 0.6s linear;
+      pointer-events: none;
+    }
+
+    @keyframes rippleEffect {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* ========================================
+       TEXT REVEAL ANIMATION
+    ======================================== */
+    .text-reveal {
+      overflow: hidden;
+    }
+
+    .text-reveal-inner {
+      display: inline-block;
+      transform: translateY(100%);
+      transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .text-reveal.active .text-reveal-inner {
+      transform: translateY(0);
+    }
+
+    /* Staggered letter animation */
+    .split-text .char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(50px) rotate(10deg);
+    }
+
+    .split-text.animate .char {
+      animation: charReveal 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+
+    @keyframes charReveal {
+      to {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg);
+      }
+    }
+
+    /* ========================================
+       MARQUEE TEXT
+    ======================================== */
+    .marquee-container {
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 2rem 0;
+      background: var(--green-dark);
+    }
+
+    .marquee-content {
+      display: inline-flex;
+      animation: marquee 25s linear infinite;
+    }
+
+    .marquee-content span {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 6vw, 4rem);
+      color: var(--cream);
+      opacity: 0.3;
+      padding: 0 3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .marquee-content span::after {
+      content: '✦';
+      margin-left: 3rem;
+      color: var(--green-light);
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .marquee-container:hover .marquee-content {
+      animation-play-state: paused;
+    }
+
+    /* ========================================
+       IMAGE ZOOM ON SCROLL
+    ======================================== */
+    .zoom-on-scroll {
+      overflow: hidden;
+    }
+
+    .zoom-on-scroll img {
+      transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* ========================================
+       LOADING SCREEN
+    ======================================== */
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--green-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    #loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    #loading-logo-container {
+      position: relative;
+      width: 280px;
+      height: auto;
+      margin-bottom: 2rem;
+    }
+
+    #loading-logo-gray {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      filter: grayscale(1) brightness(0.4);
+    }
+
+    #loading-logo-color {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      clip-path: inset(100% 0 0 0);
+      animation: logoReveal 2s ease-out forwards;
+    }
+
+    @keyframes logoReveal {
+      to { clip-path: inset(0 0 0 0); }
+    }
+
+    #loading-text {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.4em;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+      opacity: 0.8;
+    }
+
+    #loading-bar-container {
+      width: 200px;
+      height: 3px;
+      background: rgba(251, 240, 207, 0.2);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    #loading-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--green-light), var(--cream));
+      border-radius: 3px;
+      animation: loadingProgress 2s ease-out forwards;
+    }
+
+    @keyframes loadingProgress {
+      to { width: 100%; }
+    }
+
+    /* ========================================
+       MAIN CONTENT
+    ======================================== */
+    #main-content {
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    #main-content.visible {
+      opacity: 1;
+    }
+
+    /* ========================================
+       NAVIGATION
+    ======================================== */
+    .nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+    }
+
+    .nav-logo {
+      width: 120px;
+      height: auto;
+      transition: transform var(--transition-fast);
+    }
+
+    .nav-logo:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      position: relative;
+      padding: 0.5rem 0;
+      transition: color var(--transition-fast);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--green-light);
+      transition: width var(--transition-medium);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.85rem 1.75rem;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: var(--green-dark);
+      border-radius: 50px;
+      transition: all var(--transition-fast);
+      box-shadow: 0 4px 15px rgba(201, 160, 80, 0.3);
+    }
+
+    .nav-cta:hover {
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(201, 160, 80, 0.45);
+    }
+
+    .nav-cta:active {
+      transform: scale(0.97);
+    }
+
+    /* Mobile Nav Toggle */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .nav-toggle span {
+      width: 25px;
+      height: 2px;
+      background: var(--cream);
+      transition: all var(--transition-fast);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: rgba(44, 62, 31, 0.98);
+        backdrop-filter: blur(20px);
+        padding: 1.5rem 2rem;
+        gap: 0;
+        box-shadow: var(--shadow-medium);
+      }
+      
+      .nav-links.active {
+        display: flex;
+      }
+      
+      .nav-links li {
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(139, 167, 122, 0.2);
+      }
+      
+      .nav-links li:last-child {
+        border-bottom: none;
+      }
+      
+      .nav-links a {
+        color: var(--cream) !important;
+        font-size: 1rem;
+      }
+      
+      .nav-cta {
+        display: none;
+      }
+      
+      .nav-toggle {
+        display: flex;
+        z-index: 100;
+      }
+      
+      .nav-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      
+      .nav-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+      
+      .nav-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+      
+      .hero-content {
+        padding: 0 1.5rem 4rem;
+      }
+    }
+
+    /* ========================================
+       SECTION 1: HERO
+    ======================================== */
+    #section-hero {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.4) sepia(0.1) saturate(0.9);
+    }
+
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.35) sepia(0.15) saturate(0.8);
+      transform: scale(1.1);
+      transition: transform 10s ease;
+    }
+
+    #section-hero:hover .hero-bg img {
+      transform: scale(1);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(139, 167, 122, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 80% 60%, rgba(251, 240, 207, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 50% 90%, rgba(77, 103, 49, 0.3) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Grain texture overlay */
+    .hero-grain {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      padding: 0 4rem 5rem;
+      max-width: 900px;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      line-height: 0.85;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title span {
+      display: block;
+      opacity: 0;
+      transform: translateY(80px);
+    }
+
+    .hero-line1 {
+      font-size: clamp(4rem, 14vw, 12rem);
+      color: var(--cream);
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-line2 {
+      font-size: clamp(4rem, 14vw, 12rem);
+      color: var(--green-light);
+      text-shadow: 0 4px 30px rgba(139, 167, 122, 0.3);
+    }
+
+    .hero-tagline {
+      font-family: var(--font-body);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--cream);
+      opacity: 0.9;
+      max-width: 450px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-typed {
+      margin-top: 0.75rem;
+      height: 1.5rem;
+      overflow: hidden;
+    }
+
+    .hero-typed span {
+      font-family: var(--font-accent);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--green-light);
+    }
+
+    .typed-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: var(--green-light);
+      margin-left: 2px;
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      opacity: 0;
+      animation: fadeIn 1s ease 2.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 0.6; }
+    }
+
+    .scroll-indicator span {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--cream);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--cream), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { transform: scaleY(1); opacity: 0.6; }
+      50% { transform: scaleY(0.5); opacity: 0.3; }
+    }
+
+    /* ========================================
+       SECTION 2: EVENT PHOTOS
+    ======================================== */
+    #section-photos {
+      padding: 6rem 2rem;
+      background: var(--cream);
+      overflow: hidden;
+    }
+
+    .photos-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .photo-card {
+      position: relative;
+      width: calc(50% - 1rem);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      cursor: pointer;
+      transition: all var(--transition-medium);
+    }
+
+    .photo-card:nth-child(1) { aspect-ratio: 3/4; }
+    .photo-card:nth-child(2) { aspect-ratio: 3/4.5; margin-top: 2rem; }
+    .photo-card:nth-child(3) { aspect-ratio: 3/5; }
+    .photo-card:nth-child(4) { aspect-ratio: 3/4.5; margin-top: 2rem; }
+    .photo-card:nth-child(5) { aspect-ratio: 3/4; }
+
+    @media (min-width: 1024px) {
+      .photo-card {
+        width: 17%;
+      }
+      .photo-card:nth-child(2),
+      .photo-card:nth-child(4) {
+        margin-top: 3rem;
+      }
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(0.1) saturate(0.9);
+      transition: transform var(--transition-slow), filter var(--transition-medium);
+    }
+
+    .photo-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(77, 103, 49, 0.4), transparent 50%);
+      opacity: 0;
+      transition: opacity var(--transition-medium);
+      z-index: 1;
+    }
+
+    .photo-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .photo-card:hover img {
+      transform: scale(1.1);
+      filter: sepia(0) saturate(1.1);
+    }
+
+    .photo-card:hover::before {
+      opacity: 1;
+    }
+
+    /* ========================================
+       SECTION 3: PRESENTED BY
+    ======================================== */
+    #section-presented {
+      padding: 6rem 2rem 8rem;
+      background: var(--cream-light);
+    }
+
+    .presented-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .presented-header {
+      margin-bottom: 3rem;
+    }
+
+    .presented-label {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      margin-bottom: 1rem;
+    }
+
+    .presented-title {
+      font-family: var(--font-display);
+      line-height: 0.9;
+    }
+
+    .presented-title span {
+      display: block;
+    }
+
+    .presented-title .line1 {
+      font-size: clamp(2.5rem, 8vw, 6rem);
+      color: var(--green);
+    }
+
+    .presented-title .line2 {
+      font-size: clamp(3rem, 10vw, 8rem);
+      color: var(--green-dark);
+    }
+
+    .presented-content {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    @media (min-width: 1024px) {
+      .presented-content {
+        flex-direction: row;
+        gap: 4rem;
+        align-items: flex-start;
+      }
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/10;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-strong);
+    }
+
+    @media (min-width: 1024px) {
+      .video-wrapper {
+        width: 55%;
+      }
+    }
+
+    .video-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(0.5) sepia(0.1);
+      transition: filter var(--transition-medium);
+    }
+
+    .video-wrapper:hover img {
+      filter: grayscale(0) sepia(0);
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(77, 103, 49, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition-medium);
+    }
+
+    .video-wrapper:hover .video-overlay {
+      background: rgba(77, 103, 49, 0.15);
+    }
+
+    .play-btn {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .play-btn i {
+      font-size: 1.5rem;
+      color: var(--green);
+      margin-left: 4px;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    .play-btn:active {
+      transform: scale(0.95);
+    }
+
+    .presented-text {
+      flex: 1;
+    }
+
+    .presented-text p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--brown);
+      margin-bottom: 2rem;
+    }
+
+    /* Buttons - Premium Style */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.1rem 2.25rem;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      box-shadow: 0 4px 20px rgba(77, 103, 49, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 52px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-light));
+      z-index: -1;
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--green-hover) 0%, var(--green) 100%);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(77, 103, 49, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-primary:hover::after {
+      opacity: 1;
+    }
+
+    .btn-primary:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary i {
+      transition: transform var(--transition-fast);
+    }
+
+    .btn-primary:hover i {
+      transform: translateX(4px);
+    }
+
+    /* ========================================
+       SECTION 4: EVENT TICKETS
+    ======================================== */
+    #section-tickets {
+      padding: 6rem 2rem 8rem;
+      background: var(--cream);
+      overflow: hidden;
+    }
+
+    .tickets-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .tickets-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    @media (min-width: 1024px) {
+      .tickets-grid {
+        flex-direction: row;
+        justify-content: center;
+        gap: 2.5rem;
+      }
+    }
+
+    .ticket {
+      width: 100%;
+      max-width: 380px;
+      padding: 1.5rem 2rem;
+      border-radius: 16px;
+      position: relative;
+      transition: all var(--transition-medium);
+      cursor: pointer;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (min-width: 1024px) {
+      .ticket:nth-child(1) {
+        transform: rotate(-3deg);
+        z-index: 1;
+      }
+      .ticket:nth-child(2) {
+        z-index: 3;
+        transform: scale(1.05) translateY(-10px);
+      }
+      .ticket:nth-child(3) {
+        transform: rotate(3deg);
+        z-index: 1;
+      }
+    }
+
+    .ticket:hover {
+      transform: translateY(-15px) scale(1.03);
+      z-index: 10 !important;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    @media (min-width: 1024px) {
+      .ticket:nth-child(1):hover {
+        transform: rotate(-3deg) translateY(-15px) scale(1.03);
+      }
+      .ticket:nth-child(3):hover {
+        transform: rotate(3deg) translateY(-15px) scale(1.03);
+      }
+    }
+
+    .ticket-1 { 
+      background: linear-gradient(135deg, #c97b84 0%, #b06570 100%);
+      box-shadow: 0 15px 50px rgba(201, 123, 132, 0.35);
+    }
+    .ticket-2 { 
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+      box-shadow: 0 15px 50px rgba(77, 103, 49, 0.4);
+    }
+    .ticket-3 { 
+      background: linear-gradient(135deg, #5a8a7a 0%, #4a7568 100%);
+      box-shadow: 0 15px 50px rgba(90, 138, 122, 0.35);
+    }
+
+    .ticket-location {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      letter-spacing: 0.15em;
+      color: rgba(255, 255, 255, 0.7);
+      text-align: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .ticket-dashed {
+      height: 1px;
+      background: repeating-linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 255, 255, 0.4) 8px,
+        transparent 8px,
+        transparent 16px
+      );
+      margin: 1rem 0;
+    }
+
+    .ticket-main {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .ticket-date {
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    .ticket-date .day-name,
+    .ticket-date .month,
+    .ticket-date .year {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .ticket-date .day {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      line-height: 1;
+      color: white;
+    }
+
+    .ticket-info {
+      flex: 1;
+      text-align: center;
+    }
+
+    .ticket-info .event-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      color: white;
+    }
+
+    .ticket-info .event-desc {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 0.25rem;
+    }
+
+    .ticket-time {
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    .ticket-time .label {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .ticket-time .time {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: white;
+    }
+
+    .ticket-status {
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    .status-badge.available {
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--green);
+    }
+
+    /* ========================================
+       SECTION 5: UPCOMING EVENT
+    ======================================== */
+    #section-upcoming {
+      padding: 6rem 2rem 8rem;
+      background: var(--cream-light);
+    }
+
+    .upcoming-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .upcoming-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow-premium);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(201, 160, 80, 0.15);
+    }
+
+    @media (min-width: 1024px) {
+      .upcoming-card {
+        flex-direction: row;
+      }
+    }
+
+    .upcoming-image {
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+
+    @media (min-width: 1024px) {
+      .upcoming-image {
+        width: 45%;
+        aspect-ratio: auto;
+      }
+    }
+
+    .upcoming-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(0.08) saturate(0.9);
+      transition: transform var(--transition-slow);
+    }
+
+    .upcoming-card:hover .upcoming-image img {
+      transform: scale(1.05);
+    }
+
+    .upcoming-content {
+      flex: 1;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    @media (min-width: 1024px) {
+      .upcoming-content {
+        padding: 3.5rem;
+      }
+    }
+
+    .upcoming-badge {
+      display: inline-block;
+      padding: 0.6rem 1.25rem;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: var(--green-dark);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+      align-self: flex-start;
+      box-shadow: 0 4px 15px rgba(201, 160, 80, 0.35);
+    }
+
+    .upcoming-title {
+      font-family: var(--font-display);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .upcoming-title .line1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--green-dark);
+    }
+
+    .upcoming-title .line2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--green);
+    }
+
+    .upcoming-date {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      color: var(--warm-gray);
+      margin: 1.5rem 0;
+    }
+
+    .upcoming-features {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .upcoming-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--brown);
+      margin-bottom: 0.75rem;
+    }
+
+    .upcoming-features li::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      margin-top: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    /* ========================================
+       SECTION 6: OUR WHY
+    ======================================== */
+    #section-our-why {
+      padding: 6rem 2rem 8rem;
+      background: var(--cream);
+    }
+
+    .our-why-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .our-why-hero {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5rem;
+      min-height: 400px;
+    }
+
+    .our-why-text-left,
+    .our-why-text-right {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 12vw, 10rem);
+      line-height: 1;
+      color: var(--green);
+      opacity: 0.85;
+      position: absolute;
+      z-index: 1;
+    }
+
+    .our-why-text-left {
+      left: 0;
+    }
+
+    .our-why-text-right {
+      right: 0;
+    }
+
+    @media (max-width: 768px) {
+      .our-why-text-left,
+      .our-why-text-right {
+        position: relative;
+        display: none;
+      }
+    }
+
+    .our-why-image {
+      position: relative;
+      z-index: 2;
+      width: 280px;
+      aspect-ratio: 3/4;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-strong);
+      border: 4px solid white;
+    }
+
+    @media (min-width: 1024px) {
+      .our-why-image {
+        width: 320px;
+      }
+    }
+
+    .our-why-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(0.08);
+    }
+
+    .our-why-stats-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .our-why-stats-header h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      color: var(--green-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .our-why-stats-header p {
+      font-size: 1rem;
+      color: var(--warm-gray);
+    }
+
+    .stats-divider {
+      width: 100%;
+      max-width: 900px;
+      height: 1px;
+      background: var(--green-light);
+      margin: 0 auto 2.5rem;
+      opacity: 0.5;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 4.5rem);
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .stat-value::after {
+      content: '%';
+      font-size: 0.5em;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      margin-top: 0.5rem;
+    }
+
+    /* ========================================
+       SECTION 7: OUR HISTORY
+    ======================================== */
+    #section-history {
+      padding: 6rem 2rem 8rem;
+      background: var(--cream-light);
+    }
+
+    .history-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    @media (min-width: 1024px) {
+      .history-container {
+        flex-direction: row;
+        align-items: center;
+        gap: 5rem;
+      }
+    }
+
+    .history-images {
+      display: flex;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    @media (min-width: 1024px) {
+      .history-images {
+        width: 45%;
+      }
+    }
+
+    .history-img {
+      flex: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-medium);
+    }
+
+    .history-img:nth-child(1) { aspect-ratio: 2/3; margin-top: 2rem; }
+    .history-img:nth-child(2) { aspect-ratio: 2/3.5; }
+    .history-img:nth-child(3) { aspect-ratio: 2/3; margin-top: 3rem; }
+
+    .history-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(0.25) sepia(0.08);
+      transition: all var(--transition-medium);
+    }
+
+    .history-img:hover img {
+      filter: grayscale(0) sepia(0);
+      transform: scale(1.05);
+    }
+
+    .history-content {
+      flex: 1;
+    }
+
+    .history-title {
+      font-family: var(--font-display);
+      line-height: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .history-title span {
+      display: block;
+    }
+
+    .history-title .line1 {
+      font-size: clamp(4rem, 8vw, 7rem);
+      color: var(--green);
+    }
+
+    .history-title .line2 {
+      font-size: clamp(4rem, 8vw, 7rem);
+      color: var(--green-dark);
+      margin-left: 2rem;
+    }
+
+    @media (min-width: 1024px) {
+      .history-title .line2 {
+        margin-left: 4rem;
+      }
+    }
+
+    .history-content p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--brown);
+      margin-bottom: 2rem;
+    }
+
+    /* ========================================
+       SECTION 8: OUR SERVICES
+    ======================================== */
+    #section-services {
+      padding: 6rem 2rem 8rem;
+      background: var(--cream);
+    }
+
+    .services-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    @media (min-width: 1024px) {
+      .services-container {
+        flex-direction: row-reverse;
+        align-items: center;
+        gap: 5rem;
+      }
+    }
+
+    .services-images {
+      display: flex;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    @media (min-width: 1024px) {
+      .services-images {
+        width: 45%;
+      }
+    }
+
+    .service-img {
+      flex: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-medium);
+      position: relative;
+    }
+
+    .service-img:nth-child(1) { aspect-ratio: 2/3; margin-top: 3rem; }
+    .service-img:nth-child(2) { aspect-ratio: 2/3.5; }
+    .service-img:nth-child(3) { aspect-ratio: 2/3; margin-top: 2rem; }
+
+    .service-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(0.08);
+      transition: transform var(--transition-medium);
+    }
+
+    .service-img:hover img {
+      transform: scale(1.1);
+    }
+
+    .service-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(77, 103, 49, 0.85), transparent 60%);
+      display: flex;
+      align-items: flex-end;
+      padding: 1.25rem;
+      opacity: 0;
+      transition: opacity var(--transition-medium);
+    }
+
+    .service-img:hover .service-img-overlay {
+      opacity: 1;
+    }
+
+    .service-img-overlay p {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      color: white;
+    }
+
+    .services-content {
+      flex: 1;
+    }
+
+    .services-title {
+      font-family: var(--font-display);
+      line-height: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .services-title span {
+      display: block;
+    }
+
+    .services-title .line1 {
+      font-size: clamp(4rem, 8vw, 7rem);
+      color: var(--green);
+    }
+
+    .services-title .line2 {
+      font-size: clamp(4rem, 8vw, 7rem);
+      color: var(--green-dark);
+      margin-left: 2rem;
+    }
+
+    @media (min-width: 1024px) {
+      .services-title .line2 {
+        margin-left: 4rem;
+      }
+    }
+
+    .services-content > p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--brown);
+      margin-bottom: 2rem;
+    }
+
+    .services-list {
+      display: flex !important;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .service-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.25rem;
+      background: rgba(139, 167, 122, 0.1);
+      border-radius: 12px;
+      transition: all var(--transition-fast);
+    }
+
+    .service-item:hover {
+      background: rgba(139, 167, 122, 0.2);
+      transform: translateX(8px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .service-item i {
+      font-size: 1.25rem;
+      color: var(--green);
+      margin-top: 0.25rem;
+    }
+
+    .service-item-content h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .service-item-content p {
+      font-size: 0.85rem;
+      color: var(--warm-gray);
+    }
+
+    /* ========================================
+       SECTION 9: CTA + CAROUSEL
+    ======================================== */
+    #section-cta-carousel {
+      padding: 6rem 2rem 0;
+      background: var(--cream-light);
+    }
+
+    .cta-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      max-width: 900px;
+      margin: 0 auto 5rem;
+    }
+
+    @media (min-width: 640px) {
+      .cta-buttons {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+
+    .cta-btn {
+      flex: 1;
+      max-width: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1.5rem 2.5rem;
+      border-radius: 16px;
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      letter-spacing: 0.05em;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .cta-btn-primary {
+      background: var(--green);
+      color: var(--cream);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .cta-btn-primary:hover {
+      background: var(--green-hover);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .cta-btn-secondary {
+      background: transparent;
+      color: var(--green);
+      border: 3px solid var(--green);
+    }
+
+    .cta-btn-secondary:hover {
+      background: var(--green);
+      color: var(--cream);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .cta-btn:active {
+      transform: scale(0.95);
+    }
+
+    .cta-btn .icon-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform var(--transition-fast);
+    }
+
+    .cta-btn-primary .icon-circle {
+      background: var(--green-hover);
+    }
+
+    .cta-btn-secondary .icon-circle {
+      background: var(--green);
+    }
+
+    .cta-btn-secondary:hover .icon-circle {
+      background: var(--cream);
+    }
+
+    .cta-btn-secondary:hover .icon-circle i {
+      color: var(--green);
+    }
+
+    .cta-btn .icon-circle i {
+      font-size: 1rem;
+      color: var(--cream);
+    }
+
+    .cta-btn:hover .icon-circle {
+      transform: translateX(4px);
+    }
+
+    /* Carousel */
+    .carousel-wrapper {
+      overflow: hidden;
+      padding-bottom: 6rem;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 1.5rem;
+      animation: scroll 25s linear infinite;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .carousel-track:hover {
+      animation-play-state: paused;
+    }
+
+    .carousel-item {
+      flex-shrink: 0;
+      width: 300px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: all var(--transition-medium);
+    }
+
+    @media (min-width: 1024px) {
+      .carousel-item {
+        width: 400px;
+      }
+    }
+
+    .carousel-item:hover {
+      transform: scale(1.03);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      filter: sepia(0.08) saturate(0.95);
+      transition: filter var(--transition-medium);
+    }
+
+    @media (min-width: 1024px) {
+      .carousel-item img {
+        height: 300px;
+      }
+    }
+
+    .carousel-item:hover img {
+      filter: sepia(0) saturate(1.1);
+    }
+
+    /* ========================================
+       SECTION 10: BIG LOGO (PHOTO MASK)
+    ======================================== */
+    #section-big-logo {
+      padding: 6rem 2rem;
+      background: var(--green-dark);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+    }
+
+    .big-logo-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .big-logo-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.15;
+      filter: grayscale(0.5);
+    }
+
+    .tbs-mega-container {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .tbs-mega-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .tbs-line {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 18vw, 14rem);
+      font-weight: 400;
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      
+      /* Photo-inside-text effect */
+      background: 
+        linear-gradient(
+          rgba(77, 103, 49, 0.5),
+          rgba(44, 62, 31, 0.6)
+        ),
+        url('https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=1600'),
+        url('https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1600');
+      background-size: cover, 200% auto, 200% auto;
+      background-position: center, center top, center bottom;
+      background-blend-mode: overlay, normal, normal;
+      
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      
+      /* Add stroke for definition */
+      -webkit-text-stroke: 1px rgba(139, 167, 122, 0.3);
+      
+      /* Subtle animation */
+      animation: bgShift 15s ease-in-out infinite alternate;
+    }
+
+    .tbs-line:nth-child(2) {
+      font-size: clamp(5rem, 22vw, 18rem);
+      animation-delay: -5s;
+    }
+
+    .tbs-line:nth-child(3) {
+      animation-delay: -10s;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: center, 0% 0%, 100% 100%; }
+      100% { background-position: center, 100% 100%, 0% 0%; }
+    }
+
+    .tbs-tagline {
+      font-family: var(--font-accent);
+      font-style: italic;
+      font-size: clamp(1.4rem, 3.5vw, 2.5rem);
+      color: var(--cream);
+      margin-top: 2.5rem;
+      opacity: 1;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Floating particles */
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--green-light);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 20%; top: 70%; animation-delay: 1s; }
+    .particle:nth-child(3) { left: 70%; top: 30%; animation-delay: 2s; }
+    .particle:nth-child(4) { left: 85%; top: 60%; animation-delay: 3s; }
+    .particle:nth-child(5) { left: 50%; top: 85%; animation-delay: 4s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+      50% { transform: translateY(-30px) scale(1.5); opacity: 0.6; }
+    }
+
+    /* ========================================
+       SECTION 11: SCHEDULE
+    ======================================== */
+    #section-schedule {
+      padding: 6rem 2rem 8rem;
+      background: var(--green-dark);
+    }
+
+    .schedule-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    @media (min-width: 1024px) {
+      .schedule-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .schedule-card {
+      transition: transform var(--transition-medium);
+    }
+
+    .schedule-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .schedule-image {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      aspect-ratio: 16/9;
+    }
+
+    .schedule-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(0.15) saturate(0.8);
+      transition: all var(--transition-medium);
+    }
+
+    .schedule-card:hover .schedule-image img {
+      filter: sepia(0) saturate(1);
+      transform: scale(1.05);
+    }
+
+    .schedule-badges {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .schedule-badge {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+    }
+
+    .schedule-badge.event-num {
+      background: rgba(251, 240, 207, 0.9);
+      color: var(--green);
+    }
+
+    .schedule-badge.day {
+      background: var(--green);
+      color: var(--cream);
+    }
+
+    .schedule-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+
+    .schedule-divider {
+      height: 1px;
+      background: rgba(139, 167, 122, 0.3);
+      margin-bottom: 1rem;
+    }
+
+    .schedule-details {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .schedule-date-block {
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .schedule-date-block .month,
+    .schedule-date-block .year {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      color: var(--green-light);
+    }
+
+    .schedule-date-block .day {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--cream);
+      line-height: 1;
+    }
+
+    .schedule-times {
+      flex: 1;
+    }
+
+    .schedule-time-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(139, 167, 122, 0.15);
+    }
+
+    .schedule-time-row:last-child {
+      border-bottom: none;
+    }
+
+    .schedule-time-row .activity {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--cream);
+    }
+
+    .schedule-time-row .time {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--green-light);
+    }
+
+    /* ========================================
+       FOOTER
+    ======================================== */
+    #footer {
+      padding: 4rem 2rem;
+      background: var(--green-dark);
+      border-top: 1px solid rgba(139, 167, 122, 0.2);
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-top {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+    }
+
+    .footer-brand {
+      max-width: 350px;
+    }
+
+    .footer-logo {
+      width: 150px;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.95rem;
+      color: rgba(251, 240, 207, 0.7);
+      line-height: 1.7;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 4rem;
+    }
+
+    .footer-column h4 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-column ul a {
+      font-size: 0.9rem;
+      color: rgba(251, 240, 207, 0.6);
+      transition: color var(--transition-fast);
+    }
+
+    .footer-column ul a:hover {
+      color: var(--green-light);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .footer-social a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(139, 167, 122, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cream);
+      transition: all var(--transition-fast);
+    }
+
+    .footer-social a:hover {
+      background: var(--green);
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid rgba(139, 167, 122, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+
+    .footer-bottom p {
+      font-size: 0.85rem;
+      color: rgba(251, 240, 207, 0.5);
+    }
+
+    .footer-big-text {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 4rem);
+      color: var(--cream);
+      opacity: 0.15;
+      letter-spacing: 0.1em;
+    }
+
+    /* ========================================
+       REVEAL ANIMATIONS
+    ======================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-60px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal-left.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(60px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal-right.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal-scale.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Stagger delays */
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+    .delay-5 { transition-delay: 0.5s; }
+
+    /* ========================================
+       PARALLAX WRAPPER
+    ======================================== */
+    .parallax-section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .parallax-bg {
+      position: absolute;
+      inset: -20%;
+      z-index: 0;
+    }
+
+    .parallax-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .parallax-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========================================
+       UTILITY CLASSES
+    ======================================== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .text-center { text-align: center; }
+    .text-left { text-align: left; }
+    .text-right { text-align: right; }
+
+    /* Glassmorphism card */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+    }
+
+    /* ========================================
+       SMOOTH HOVER FOR BUTTONS
+    ======================================== */
+    .btn-primary, .nav-cta, .cta-btn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before, .nav-cta::before, .cta-btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .btn-primary:hover::before, .nav-cta:hover::before, .cta-btn-primary:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    /* ========================================
+       SHAKE ANIMATION
+    ======================================== */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+
+    .shake:hover {
+      animation: shake 0.5s ease-in-out;
+    }
+
+    /* ========================================
+       BOUNCE ANIMATION
+    ======================================== */
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-15px); }
+      60% { transform: translateY(-7px); }
+    }
+
+    .bounce-hover:hover {
+      animation: bounce 0.8s ease;
+    }
+
+    /* ========================================
+       PULSE GLOW
+    ======================================== */
+    .pulse-glow {
+      animation: pulseGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(139, 167, 122, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(139, 167, 122, 0.6), 0 0 60px rgba(139, 167, 122, 0.3); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-dot" id="cursor-dot"></div>
+  
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+  
+  <!-- FLOATING BACKGROUND SHAPES -->
+  <div class="floating-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+
+  <!-- LOADING SCREEN -->
+  <div id="loading-screen" data-testid="loading-screen">
+    <div id="loading-logo-container">
+      <img id="loading-logo-gray" src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/xezg7dgx_TBS_NoBG_Cream.png" alt="The Buddy Social Logo">
+      <img id="loading-logo-color" src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/xezg7dgx_TBS_NoBG_Cream.png" alt="The Buddy Social Logo">
+    </div>
+    <div id="loading-text">HOLD TIGHT</div>
+    <div id="loading-bar-container">
+      <div id="loading-bar"></div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div id="main-content">
+    
+    <!-- NAVIGATION -->
+    <nav class="nav" data-testid="navigation">
+      <a href="#section-hero">
+        <img class="nav-logo" src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/xezg7dgx_TBS_NoBG_Cream.png" alt="The Buddy Social Logo">
+      </a>
+      <ul class="nav-links">
+        <li><a href="#section-our-why" data-testid="nav-about">About</a></li>
+        <li><a href="#section-tickets" data-testid="nav-events">Events</a></li>
+        <li><a href="#section-services" data-testid="nav-services">Services</a></li>
+        <li><a href="#section-schedule" data-testid="nav-schedule">Schedule</a></li>
+      </ul>
+      <a href="https://www.tickettailor.com/events/thebuddysocial" target="_blank" rel="noopener" class="nav-cta" data-testid="nav-cta">Get Tickets</a>
+      <div class="nav-toggle" data-testid="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+
+    <!-- SECTION 1: HERO -->
+    <section id="section-hero" data-testid="hero-section">
+      <div class="hero-bg">
+        <video autoplay muted loop playsinline>
+          <source src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/ucsr69kd_AdobeStock_191778898%20%281%29.mp4" type="video/mp4">
+          <!-- Fallback image if video fails -->
+          <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Cafe Background">
+        </video>
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="hero-grain"></div>
+      
+      <div class="hero-content">
+        <p class="hero-subtitle">Live from Dublin</p>
+        <h1 class="hero-title">
+          <span class="hero-line1">THE BUDDY</span>
+          <span class="hero-line2">SOCIAL</span>
+        </h1>
+        <p class="hero-tagline">Cosy space for community</p>
+        <div class="hero-typed">
+          <span id="typed-text"></span><span class="typed-cursor"></span>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: EVENT PHOTOS -->
+    <section id="section-photos" data-testid="photos-section">
+      <div class="photos-grid">
+        <div class="photo-card reveal">
+          <img src="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Networking Event">
+        </div>
+        <div class="photo-card reveal delay-1">
+          <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Coffee Chat">
+        </div>
+        <div class="photo-card reveal delay-2">
+          <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Team Meeting">
+        </div>
+        <div class="photo-card reveal delay-3">
+          <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Graduate Meetup">
+        </div>
+        <div class="photo-card reveal delay-4">
+          <img src="https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Vision Board">
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: PRESENTED BY -->
+    <section id="section-presented" data-testid="presented-section">
+      <div class="presented-container">
+        <div class="presented-header">
+          <p class="presented-label reveal">PRESENTED BY</p>
+          <h2 class="presented-title">
+            <span class="line1 reveal delay-1">LADIES & GENTLEMEN...</span>
+            <span class="line2 reveal delay-2">THE BUDDY SOCIAL</span>
+          </h2>
+        </div>
+
+        <div class="presented-content">
+          <div class="video-wrapper reveal-left">
+            <img src="https://images.pexels.com/photos/3182750/pexels-photo-3182750.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Video Thumbnail">
+            <div class="video-overlay">
+              <div class="play-btn" data-testid="play-video-btn">
+                <i class="fa-solid fa-play"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="presented-text reveal-right">
+            <p>Every great community needs a cosy space, and for one Saturday each month in Dublin, that's The Buddy Social. Hosted in the heart of the city, this recurring event brings together students, graduates, and early-career professionals for meaningful connections, career workshops, and genuine support.</p>
+            <a href="https://www.tickettailor.com/events/thebuddysocial" target="_blank" rel="noopener" class="btn-primary" data-testid="buy-tickets-btn">
+              Buy Tickets
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: EVENT TICKETS -->
+    <section id="section-tickets" data-testid="tickets-section">
+      <div class="tickets-container">
+        <div class="tickets-grid">
+          <!-- Ticket 1 - Past -->
+          <div class="ticket ticket-1 reveal-scale" data-testid="ticket-1">
+            <p class="ticket-location">Dublin City Centre</p>
+            <div class="ticket-dashed"></div>
+            <div class="ticket-main">
+              <div class="ticket-date">
+                <p class="day-name">SAT</p>
+                <p class="day">6</p>
+                <p class="month">DEC</p>
+                <p class="year">2025</p>
+              </div>
+              <div class="ticket-info">
+                <p class="event-name">Launch & Lounge</p>
+                <p class="event-desc">Cosy space to meet, discuss and learn</p>
+              </div>
+              <div class="ticket-time">
+                <p class="label">ARRIVAL</p>
+                <p class="label">TIME</p>
+                <p class="time">1:30 PM</p>
+              </div>
+            </div>
+            <div class="ticket-dashed"></div>
+            <div class="ticket-status">
+              <span class="status-badge">EXPIRED</span>
+            </div>
+          </div>
+
+          <!-- Ticket 2 - Current -->
+          <div class="ticket ticket-2 reveal-scale delay-1" data-testid="ticket-2">
+            <p class="ticket-location">Dublin City Centre</p>
+            <div class="ticket-dashed"></div>
+            <div class="ticket-main">
+              <div class="ticket-date">
+                <p class="day-name">SAT</p>
+                <p class="day">3</p>
+                <p class="month">JAN</p>
+                <p class="year">2026</p>
+              </div>
+              <div class="ticket-info">
+                <p class="event-name">LinkedIn Over Latte</p>
+                <p class="event-desc">New Year, New Energy</p>
+              </div>
+              <div class="ticket-time">
+                <p class="label">ARRIVAL</p>
+                <p class="label">TIME</p>
+                <p class="time">1:30 PM</p>
+              </div>
+            </div>
+            <div class="ticket-dashed"></div>
+            <div class="ticket-status">
+              <span class="status-badge">EXPIRED</span>
+            </div>
+          </div>
+
+          <!-- Ticket 3 - Upcoming -->
+          <div class="ticket ticket-3 reveal-scale delay-2" data-testid="ticket-3">
+            <p class="ticket-location">Dublin City Centre</p>
+            <div class="ticket-dashed"></div>
+            <div class="ticket-main">
+              <div class="ticket-date">
+                <p class="day-name">SAT</p>
+                <p class="day">17</p>
+                <p class="month">JAN</p>
+                <p class="year">2026</p>
+              </div>
+              <div class="ticket-info">
+                <p class="event-name">Hire Me, Maybe</p>
+                <p class="event-desc">New Year, New Energy</p>
+              </div>
+              <div class="ticket-time">
+                <p class="label">ARRIVAL</p>
+                <p class="label">TIME</p>
+                <p class="time">1:30 PM</p>
+              </div>
+            </div>
+            <div class="ticket-dashed"></div>
+            <div class="ticket-status">
+              <span class="status-badge">EXPIRED</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: UPCOMING EVENT -->
+    <section id="section-upcoming" data-testid="upcoming-section">
+      <div class="upcoming-container">
+        <div class="upcoming-card reveal-scale">
+          <div class="upcoming-image">
+            <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Vision Boarding Event">
+          </div>
+          <div class="upcoming-content">
+            <span class="upcoming-badge">Upcoming Event</span>
+            <h3 class="upcoming-title">
+              <span class="line1">Goal Setting for 2026:</span>
+              <span class="line2">Vision Boarding</span>
+            </h3>
+            <p class="upcoming-date">FEB 28, 2026 — 2PM</p>
+            <ul class="upcoming-features">
+              <li>Warm, easy introductions</li>
+              <li>Guided reflection on 2025</li>
+              <li>Vision Boarding for 2026</li>
+            </ul>
+            <a href="https://www.tickettailor.com/events/thebuddysocial/1986992" target="_blank" rel="noopener" class="btn-primary" data-testid="get-tickets-upcoming-btn">
+              Get Tickets
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: OUR WHY -->
+    <section id="section-our-why" data-testid="our-why-section">
+      <div class="our-why-container">
+        <div class="our-why-hero">
+          <span class="our-why-text-left reveal-left">Our</span>
+          <div class="our-why-image reveal-scale">
+            <img src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Irish Graduates">
+          </div>
+          <span class="our-why-text-right reveal-right">Why</span>
+        </div>
+
+        <div class="our-why-stats-header reveal">
+          <h3>Around 34,000 Students & Grads in Ireland</h3>
+          <p>Navigating careers without enough support</p>
+        </div>
+
+        <div class="stats-divider reveal"></div>
+
+        <div class="stats-grid">
+          <div class="stat-item reveal delay-1">
+            <p class="stat-value" data-target="72">0</p>
+            <p class="stat-label">struggle with job search</p>
+          </div>
+          <div class="stat-item reveal delay-2">
+            <p class="stat-value" data-target="58">0</p>
+            <p class="stat-label">CVs need major rework</p>
+          </div>
+          <div class="stat-item reveal delay-3">
+            <p class="stat-value" data-target="45">0</p>
+            <p class="stat-label">feel unprepared for interviews</p>
+          </div>
+          <div class="stat-item reveal delay-4">
+            <p class="stat-value" data-target="63">0</p>
+            <p class="stat-label">report skills gap anxiety</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE TEXT SECTION -->
+    <div class="marquee-container">
+      <div class="marquee-content">
+        <span>Community</span>
+        <span>Connection</span>
+        <span>Careers</span>
+        <span>Ireland</span>
+        <span>Community</span>
+        <span>Connection</span>
+        <span>Careers</span>
+        <span>Ireland</span>
+        <span>Community</span>
+        <span>Connection</span>
+        <span>Careers</span>
+        <span>Ireland</span>
+      </div>
+    </div>
+
+    <!-- SECTION 7: OUR HISTORY -->
+    <section id="section-history" data-testid="history-section">
+      <div class="history-container">
+        <div class="history-images">
+          <div class="history-img reveal-left">
+            <img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/vlgnjnnx_Mentor%202.png" alt="TBS Mentor">
+          </div>
+          <div class="history-img reveal-left delay-1">
+            <img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/wxzmriii_WhatsApp%20Image%202026-01-03%20at%2018.35.31.jpeg" alt="TBS Workshop">
+          </div>
+          <div class="history-img reveal-left delay-2">
+            <img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/mvks0p7z__DSF9101.jpg" alt="TBS Founder">
+          </div>
+        </div>
+
+        <div class="history-content">
+          <h2 class="history-title">
+            <span class="line1 reveal-right">OUR</span>
+            <span class="line2 reveal-right delay-1">HISTORY</span>
+          </h2>
+          <p class="reveal-right delay-2">Why we started The Buddy Social: Navigating Ireland's tedious career process for grads — from resumes to real jobs — shouldn't be a lonely journey. Founded in 2024, we've been creating cosy spaces where students and graduates can connect, learn, and grow together. Our community has helped hundreds of young professionals find their footing in Dublin's competitive job market.</p>
+          <a href="#footer" class="btn-primary reveal-right delay-3" data-testid="contact-us-btn">
+            Contact Us
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: OUR SERVICES -->
+    <section id="section-services" data-testid="services-section">
+      <div class="services-container">
+        <div class="services-images">
+          <div class="service-img reveal-right">
+            <img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800" alt="CV Audit">
+            <div class="service-img-overlay">
+              <p>CV Audit & Work</p>
+            </div>
+          </div>
+          <div class="service-img reveal-right delay-1">
+            <img src="https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Job Search">
+            <div class="service-img-overlay">
+              <p>Job Search Strategy</p>
+            </div>
+          </div>
+          <div class="service-img reveal-right delay-2">
+            <img src="https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Full Support">
+            <div class="service-img-overlay">
+              <p>Full End-to-End Support</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="services-content">
+          <h2 class="services-title">
+            <span class="line1 reveal-left">OUR</span>
+            <span class="line2 reveal-left delay-1">SERVICES</span>
+          </h2>
+          <p class="reveal-left delay-2">From polishing your CV to landing your dream role, we offer tailored support at every stage of your career journey. Our services are designed specifically for Irish students and graduates navigating the job market.</p>
+          
+          <div class="services-list">
+            <div class="service-item reveal-left delay-3" data-testid="service-cv">
+              <i class="fa-solid fa-file-lines"></i>
+              <div class="service-item-content">
+                <h4>CV Audit & Work</h4>
+                <p>Professional review and complete overhaul of your CV</p>
+              </div>
+            </div>
+            <div class="service-item reveal-left delay-4" data-testid="service-search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <div class="service-item-content">
+                <h4>Job Search Strategy</h4>
+                <p>Targeted approach to finding the right opportunities</p>
+              </div>
+            </div>
+            <div class="service-item reveal-left delay-5" data-testid="service-support">
+              <i class="fa-solid fa-handshake"></i>
+              <div class="service-item-content">
+                <h4>Full End-to-End Support</h4>
+                <p>From application to offer — we're with you every step</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9: CTA + CAROUSEL -->
+    <section id="section-cta-carousel" data-testid="cta-carousel-section">
+      <div class="cta-buttons">
+        <a href="https://www.tickettailor.com/events/thebuddysocial" target="_blank" rel="noopener" class="cta-btn cta-btn-primary reveal-left" data-testid="cta-buy-tickets">
+          Buy Tickets
+          <span class="icon-circle">
+            <i class="fa-solid fa-arrow-right"></i>
+          </span>
+        </a>
+        <a href="#footer" class="cta-btn cta-btn-secondary reveal-right" data-testid="cta-contact">
+          Contact Us
+          <span class="icon-circle">
+            <i class="fa-solid fa-arrow-right"></i>
+          </span>
+        </a>
+      </div>
+
+      <div class="carousel-wrapper">
+        <div class="carousel-track">
+          <div class="carousel-item"><img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/nqc40fn6__DSF9103.JPG" alt="TBS Event Group Photo"></div>
+          <div class="carousel-item"><img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/k8lq9qsk_WhatsApp%20Image%202025-12-08%20at%2009.35.55.jpeg" alt="TBS Community Event"></div>
+          <div class="carousel-item"><img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/fsuxhced_WhatsApp%20Image%202026-01-03%20at%2018.35.32%20%281%29.jpeg" alt="TBS Workshop Session"></div>
+          <div class="carousel-item"><img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/s83uk95e_IMG_3255.jpg" alt="TBS Presentation"></div>
+          <!-- Duplicates for seamless loop -->
+          <div class="carousel-item"><img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/nqc40fn6__DSF9103.JPG" alt="TBS Event Group Photo"></div>
+          <div class="carousel-item"><img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/k8lq9qsk_WhatsApp%20Image%202025-12-08%20at%2009.35.55.jpeg" alt="TBS Community Event"></div>
+          <div class="carousel-item"><img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/fsuxhced_WhatsApp%20Image%202026-01-03%20at%2018.35.32%20%281%29.jpeg" alt="TBS Workshop Session"></div>
+          <div class="carousel-item"><img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/s83uk95e_IMG_3255.jpg" alt="TBS Presentation"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 10: BIG LOGO (PHOTO MASK EFFECT) -->
+    <section id="section-big-logo" data-testid="big-logo-section">
+      <!-- Floating particles -->
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      
+      <div class="big-logo-bg">
+        <img src="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Background">
+      </div>
+      
+      <div class="tbs-mega-container reveal-scale">
+        <div class="tbs-mega-text">
+          <span class="tbs-line">THE</span>
+          <span class="tbs-line">BUDDY</span>
+          <span class="tbs-line">SOCIAL</span>
+        </div>
+        <p class="tbs-tagline">It's Saturday Afternoon!</p>
+      </div>
+    </section>
+
+    <!-- SECTION 11: SCHEDULE -->
+    <section id="section-schedule" data-testid="schedule-section">
+      <div class="schedule-container">
+        <div class="schedule-grid">
+          <!-- Event 1 Schedule -->
+          <div class="schedule-card reveal-left">
+            <div class="schedule-image">
+              <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Launch & Lounge">
+              <div class="schedule-badges">
+                <span class="schedule-badge event-num">EVENT 01</span>
+                <span class="schedule-badge day">SATURDAY</span>
+              </div>
+            </div>
+            <h3 class="schedule-title">Launch & Lounge</h3>
+            <div class="schedule-divider"></div>
+            <div class="schedule-details">
+              <div class="schedule-date-block">
+                <p class="month">DEC</p>
+                <p class="day">6</p>
+                <p class="year">2025</p>
+              </div>
+              <div class="schedule-times">
+                <div class="schedule-time-row">
+                  <span class="activity">Doors Open / Welcome</span>
+                  <span class="time">1:30 PM</span>
+                </div>
+                <div class="schedule-time-row">
+                  <span class="activity">Icebreakers & Networking</span>
+                  <span class="time">2:00 PM</span>
+                </div>
+                <div class="schedule-time-row">
+                  <span class="activity">Panel Discussion</span>
+                  <span class="time">3:00 PM</span>
+                </div>
+                <div class="schedule-time-row">
+                  <span class="activity">Open Floor & Coffee</span>
+                  <span class="time">4:00 PM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Event 2 Schedule -->
+          <div class="schedule-card reveal-right">
+            <div class="schedule-image">
+              <img src="https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg?auto=compress&cs=tinysrgb&w=800" alt="LinkedIn Over Latte">
+              <div class="schedule-badges">
+                <span class="schedule-badge event-num">EVENT 02</span>
+                <span class="schedule-badge day">SATURDAY</span>
+              </div>
+            </div>
+            <h3 class="schedule-title">LinkedIn Over Latte</h3>
+            <div class="schedule-divider"></div>
+            <div class="schedule-details">
+              <div class="schedule-date-block">
+                <p class="month">JAN</p>
+                <p class="day">3</p>
+                <p class="year">2026</p>
+              </div>
+              <div class="schedule-times">
+                <div class="schedule-time-row">
+                  <span class="activity">Doors Open / Welcome</span>
+                  <span class="time">1:30 PM</span>
+                </div>
+                <div class="schedule-time-row">
+                  <span class="activity">LinkedIn Workshop</span>
+                  <span class="time">2:00 PM</span>
+                </div>
+                <div class="schedule-time-row">
+                  <span class="activity">Profile Reviews</span>
+                  <span class="time">3:00 PM</span>
+                </div>
+                <div class="schedule-time-row">
+                  <span class="activity">Networking & Close</span>
+                  <span class="time">4:00 PM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="footer" data-testid="footer">
+      <div class="footer-container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <img class="footer-logo" src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/xezg7dgx_TBS_NoBG_Cream.png" alt="The Buddy Social Logo">
+            <p>Building Dublin's most welcoming community for students and graduates. Join us every Saturday for connections that matter.</p>
+            <div class="footer-social">
+              <a href="https://www.instagram.com/thebuddysocial/" target="_blank" rel="noopener" data-testid="social-instagram"><i class="fa-brands fa-instagram"></i></a>
+              <a href="https://www.linkedin.com/company/the-buddy-social/" target="_blank" rel="noopener" data-testid="social-linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-links">
+            <div class="footer-column">
+              <h4>Quick Links</h4>
+              <ul>
+                <li><a href="#section-our-why">About Us</a></li>
+                <li><a href="#section-tickets">Events</a></li>
+                <li><a href="#section-services">Services</a></li>
+                <li><a href="#section-schedule">Schedule</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h4>Contact</h4>
+              <ul>
+                <li><a href="mailto:hello@thebuddysocial.ie">hello@thebuddysocial.ie</a></li>
+                <li><a href="#">Dublin, Ireland</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2026 The Buddy Social. All rights reserved.</p>
+          <span class="footer-big-text">THE BUDDY SOCIAL</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // ========================================
+    // LOADING SCREEN
+    // ========================================
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loading-screen').classList.add('hidden');
+        document.getElementById('main-content').classList.add('visible');
+        initAnimations();
+        // Start typed text immediately after page is visible
+        setTimeout(typeText, 500);
+      }, 2200);
+    });
+
+    // ========================================
+    // GSAP ANIMATIONS
+    // ========================================
+    function initAnimations() {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero animations
+      const heroTl = gsap.timeline({ delay: 0.3 });
+      heroTl
+        .to('.hero-subtitle', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+        .to('.hero-line1', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.4')
+        .to('.hero-line2', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.7')
+        .to('.hero-tagline', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.5');
+
+      // Scroll-triggered reveals
+      gsap.utils.toArray('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(elem => {
+        ScrollTrigger.create({
+          trigger: elem,
+          start: 'top 85%',
+          onEnter: () => elem.classList.add('active'),
+          once: true
+        });
+      });
+
+      // Parallax effects
+      gsap.utils.toArray('.hero-bg img').forEach(img => {
+        gsap.to(img, {
+          y: 100,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: img,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
+      });
+
+      // Stats counter animation
+      gsap.utils.toArray('.stat-value').forEach(stat => {
+        const target = parseInt(stat.getAttribute('data-target'));
+        ScrollTrigger.create({
+          trigger: stat,
+          start: 'top 85%',
+          onEnter: () => animateCounter(stat, target),
+          once: true
+        });
+      });
+    }
+
+    // ========================================
+    // TYPED TEXT EFFECT
+    // ========================================
+    const phrases = [
+      'Coffee. Conversations. Community.',
+      'Where graduates become friends.',
+      'Your Saturday afternoon awaits.',
+      'Dublin\'s cosiest career space.'
+    ];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function typeText() {
+      const typedElement = document.getElementById('typed-text');
+      const currentPhrase = phrases[phraseIndex];
+      
+      if (isDeleting) {
+        typedElement.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typedElement.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      let typeSpeed = isDeleting ? 30 : 60;
+
+      if (!isDeleting && charIndex === currentPhrase.length) {
+        typeSpeed = 2000;
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        typeSpeed = 500;
+      }
+
+      setTimeout(typeText, typeSpeed);
+    }
+
+    // ========================================
+    // COUNTER ANIMATION
+    // ========================================
+    function animateCounter(element, target) {
+      let current = 0;
+      const increment = target / 60;
+      const duration = 2000;
+      const stepTime = duration / 60;
+
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          element.textContent = target;
+          clearInterval(timer);
+        } else {
+          element.textContent = Math.floor(current);
+        }
+      }, stepTime);
+    }
+
+    // ========================================
+    // SMOOTH SCROLL FOR NAV LINKS
+    // ========================================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // ========================================
+    // MOBILE NAV TOGGLE
+    // ========================================
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (navToggle && navLinks) {
+      navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('active');
+        navLinks.classList.toggle('active');
+      });
+      
+      // Close menu when clicking on a link
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          navToggle.classList.remove('active');
+          navLinks.classList.remove('active');
+        });
+      });
+    }
+
+    // ========================================
+    // PHOTO CARD HOVER FOCUS EFFECT
+    // ========================================
+    const photoCards = document.querySelectorAll('.photo-card');
+    photoCards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        photoCards.forEach(c => {
+          if (c !== card) c.style.opacity = '0.5';
+        });
+      });
+      card.addEventListener('mouseleave', () => {
+        photoCards.forEach(c => c.style.opacity = '1');
+      });
+    });
+
+    // ========================================
+    // TICKET HOVER Z-INDEX
+    // ========================================
+    const tickets = document.querySelectorAll('.ticket');
+    tickets.forEach(ticket => {
+      ticket.addEventListener('mouseenter', () => {
+        tickets.forEach(t => t.style.zIndex = '1');
+        ticket.style.zIndex = '10';
+      });
+    });
+
+    // ========================================
+    // CUSTOM CURSOR
+    // ========================================
+    const cursor = document.getElementById('cursor');
+    const cursorDot = document.getElementById('cursor-dot');
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      // Dot follows immediately
+      if (cursorDot) {
+        cursorDot.style.left = mouseX + 'px';
+        cursorDot.style.top = mouseY + 'px';
+      }
+    });
+
+    // Smooth cursor follow
+    function animateCursor() {
+      const speed = 0.15;
+      cursorX += (mouseX - cursorX) * speed;
+      cursorY += (mouseY - cursorY) * speed;
+      
+      if (cursor) {
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+      }
+      
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // Cursor hover effects
+    const hoverElements = document.querySelectorAll('a, button, .btn-primary, .nav-cta, .ticket, .photo-card, .service-item, .cta-btn, .play-btn');
+    hoverElements.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        if (cursor) cursor.classList.add('hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        if (cursor) cursor.classList.remove('hover');
+      });
+    });
+
+    // Click effect
+    document.addEventListener('mousedown', () => {
+      if (cursor) cursor.classList.add('click');
+    });
+    document.addEventListener('mouseup', () => {
+      if (cursor) cursor.classList.remove('click');
+    });
+
+    // ========================================
+    // SCROLL PROGRESS BAR
+    // ========================================
+    const scrollProgress = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', () => {
+      const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = (window.scrollY / windowHeight) * 100;
+      if (scrollProgress) {
+        scrollProgress.style.width = scrolled + '%';
+      }
+    });
+
+    // ========================================
+    // 3D TILT EFFECT FOR CARDS
+    // ========================================
+    const tiltCards = document.querySelectorAll('.ticket, .upcoming-card, .photo-card');
+    tiltCards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 10;
+        const rotateY = (centerX - x) / 10;
+        
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+
+    // ========================================
+    // RIPPLE EFFECT ON BUTTONS
+    // ========================================
+    const rippleButtons = document.querySelectorAll('.btn-primary, .cta-btn, .nav-cta');
+    rippleButtons.forEach(btn => {
+      btn.style.position = 'relative';
+      btn.style.overflow = 'hidden';
+      
+      btn.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+
+    // ========================================
+    // MAGNETIC BUTTON EFFECT
+    // ========================================
+    const magneticBtns = document.querySelectorAll('.nav-cta, .btn-primary, .cta-btn, .play-btn');
+    magneticBtns.forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+      });
+      
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+
+    // ========================================
+    // PARALLAX ON MOUSE MOVE
+    // ========================================
+    const parallaxElements = document.querySelectorAll('.hero-content, .tbs-mega');
+    document.addEventListener('mousemove', (e) => {
+      const x = (window.innerWidth / 2 - e.clientX) / 50;
+      const y = (window.innerHeight / 2 - e.clientY) / 50;
+      
+      parallaxElements.forEach(el => {
+        el.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    });
+
+    // ========================================
+    // SCROLL-TRIGGERED IMAGE ZOOM
+    // ========================================
+    gsap.utils.toArray('.photo-card img, .history-img img, .service-img img').forEach(img => {
+      gsap.fromTo(img, 
+        { scale: 1.2 },
+        {
+          scale: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: img,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          }
+        }
+      );
+    });
+
+    // ========================================
+    // STAGGERED REVEAL FOR LISTS
+    // ========================================
+    gsap.utils.toArray('.services-list .service-item').forEach((item, index) => {
+      gsap.from(item, {
+        x: -50,
+        opacity: 0,
+        duration: 0.6,
+        delay: index * 0.1,
+        scrollTrigger: {
+          trigger: item,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    // ========================================
+    // TEXT SCRAMBLE EFFECT ON HOVER
+    // ========================================
+    class TextScramble {
+      constructor(el) {
+        this.el = el;
+        this.chars = '!<>-_\\/[]{}—=+*^?#________';
+        this.update = this.update.bind(this);
+      }
+      
+      setText(newText) {
+        const oldText = this.el.innerText;
+        const length = Math.max(oldText.length, newText.length);
+        const promise = new Promise((resolve) => this.resolve = resolve);
+        this.queue = [];
+        for (let i = 0; i < length; i++) {
+          const from = oldText[i] || '';
+          const to = newText[i] || '';
+          const start = Math.floor(Math.random() * 40);
+          const end = start + Math.floor(Math.random() * 40);
+          this.queue.push({ from, to, start, end });
+        }
+        cancelAnimationFrame(this.frameRequest);
+        this.frame = 0;
+        this.update();
+        return promise;
+      }
+      
+      update() {
+        let output = '';
+        let complete = 0;
+        for (let i = 0, n = this.queue.length; i < n; i++) {
+          let { from, to, start, end, char } = this.queue[i];
+          if (this.frame >= end) {
+            complete++;
+            output += to;
+          } else if (this.frame >= start) {
+            if (!char || Math.random() < 0.28) {
+              char = this.chars[Math.floor(Math.random() * this.chars.length)];
+              this.queue[i].char = char;
+            }
+            output += `<span style="color: var(--green-light)">${char}</span>`;
+          } else {
+            output += from;
+          }
+        }
+        this.el.innerHTML = output;
+        if (complete === this.queue.length) {
+          this.resolve();
+        } else {
+          this.frameRequest = requestAnimationFrame(this.update);
+          this.frame++;
+        }
+      }
+    }
+
+    // Apply text scramble to section titles on hover
+    document.querySelectorAll('.history-title .line2, .services-title .line2').forEach(el => {
+      const fx = new TextScramble(el);
+      const originalText = el.innerText;
+      
+      el.addEventListener('mouseenter', () => {
+        fx.setText(originalText);
+      });
+    });
+
+    // ========================================
+    // SMOOTH SECTION TRANSITIONS
+    // ========================================
+    gsap.utils.toArray('section').forEach(section => {
+      gsap.from(section, {
+        opacity: 0.8,
+        scrollTrigger: {
+          trigger: section,
+          start: 'top center',
+          end: 'bottom center',
+          scrub: true
+        }
+      });
+    });
+
+    // ========================================
+    // FLOATING SHAPES MOUSE INTERACTION
+    // ========================================
+    const shapes = document.querySelectorAll('.shape');
+    document.addEventListener('mousemove', (e) => {
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      
+      shapes.forEach((shape, index) => {
+        const speed = (index + 1) * 20;
+        shape.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+      });
+    });
+
+    // ========================================
+    // COUNTER WITH EASING
+    // ========================================
+    function easeOutQuart(t) {
+      return 1 - Math.pow(1 - t, 4);
+    }
+
+    // Enhanced counter animation with easing
+    function animateCounterEased(element, target) {
+      const duration = 2500;
+      const startTime = performance.now();
+      
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easedProgress = easeOutQuart(progress);
+        const current = Math.floor(easedProgress * target);
+        
+        element.textContent = current;
+        
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        } else {
+          element.textContent = target;
+        }
+      }
+      
+      requestAnimationFrame(update);
+    }
+
+    // ========================================
+    // FOOTER SOCIAL ICONS ANIMATION
+    // ========================================
+    const socialIcons = document.querySelectorAll('.footer-social a');
+    socialIcons.forEach((icon, index) => {
+      icon.addEventListener('mouseenter', () => {
+        gsap.to(icon, {
+          y: -5,
+          rotation: 360,
+          duration: 0.4,
+          ease: 'back.out(1.7)'
+        });
+      });
+      
+      icon.addEventListener('mouseleave', () => {
+        gsap.to(icon, {
+          y: 0,
+          rotation: 0,
+          duration: 0.3
+        });
+      });
+    });
+
+    // ========================================
+    // NAVBAR HIDE ON SCROLL DOWN
+    // ========================================
+    let lastScrollY = window.scrollY;
+    const nav = document.querySelector('.nav');
+    
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > lastScrollY && window.scrollY > 100) {
+        nav.style.transform = 'translateY(-100%)';
+      } else {
+        nav.style.transform = 'translateY(0)';
+      }
+      lastScrollY = window.scrollY;
+      nav.style.transition = 'transform 0.3s ease';
+    });
+  </script>
+</body>
+</html>
