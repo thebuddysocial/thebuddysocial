@@ -979,12 +979,19 @@
       border-radius: 20px;
       overflow: hidden;
       box-shadow: var(--shadow-strong);
+      cursor: pointer;
     }
 
     @media (min-width: 1024px) {
       .video-wrapper {
         width: 55%;
       }
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .video-wrapper img {
@@ -1006,7 +1013,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background var(--transition-medium);
+      transition: opacity 0.4s ease, background 0.3s ease;
     }
 
     .video-wrapper:hover .video-overlay {
@@ -2796,11 +2803,13 @@
         </div>
 
         <div class="presented-content">
-          <div class="video-wrapper reveal-left">
-            <img src="https://images.pexels.com/photos/3182750/pexels-photo-3182750.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Video Thumbnail">
-            <div class="video-overlay">
+          <div class="video-wrapper reveal-left" id="video-container" data-testid="video-wrapper">
+            <video id="tbs-video" preload="metadata" playsinline poster="" muted>
+              <source src="https://customer-assets.emergentagent.com/job_github-viewer-live/artifacts/7wsahz3a_TBS-Intro%20%281%29.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay" id="video-overlay">
               <div class="play-btn" data-testid="play-video-btn">
-                <i class="fa-solid fa-play"></i>
+                <i class="fa-solid fa-play" id="play-icon"></i>
               </div>
             </div>
           </div>
@@ -3292,6 +3301,37 @@
         setTimeout(typeText, 500);
       }, 2200);
     });
+
+    // ========================================
+    // VIDEO PLAYER
+    // ========================================
+    (function() {
+      const video = document.getElementById('tbs-video');
+      const overlay = document.getElementById('video-overlay');
+      const playIcon = document.getElementById('play-icon');
+      const container = document.getElementById('video-container');
+      if (!video || !overlay) return;
+
+      container.addEventListener('click', function() {
+        if (video.paused) {
+          video.muted = false;
+          video.play();
+          overlay.style.opacity = '0';
+          overlay.style.pointerEvents = 'none';
+        } else {
+          video.pause();
+          overlay.style.opacity = '1';
+          overlay.style.pointerEvents = 'auto';
+          playIcon.className = 'fa-solid fa-play';
+        }
+      });
+
+      video.addEventListener('ended', function() {
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'auto';
+        playIcon.className = 'fa-solid fa-play';
+      });
+    })();
 
     // ========================================
     // GSAP ANIMATIONS
