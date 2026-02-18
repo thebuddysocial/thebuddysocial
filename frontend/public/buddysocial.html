@@ -3303,6 +3303,37 @@
     });
 
     // ========================================
+    // VIDEO PLAYER
+    // ========================================
+    (function() {
+      const video = document.getElementById('tbs-video');
+      const overlay = document.getElementById('video-overlay');
+      const playIcon = document.getElementById('play-icon');
+      const container = document.getElementById('video-container');
+      if (!video || !overlay) return;
+
+      container.addEventListener('click', function() {
+        if (video.paused) {
+          video.muted = false;
+          video.play();
+          overlay.style.opacity = '0';
+          overlay.style.pointerEvents = 'none';
+        } else {
+          video.pause();
+          overlay.style.opacity = '1';
+          overlay.style.pointerEvents = 'auto';
+          playIcon.className = 'fa-solid fa-play';
+        }
+      });
+
+      video.addEventListener('ended', function() {
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'auto';
+        playIcon.className = 'fa-solid fa-play';
+      });
+    })();
+
+    // ========================================
     // GSAP ANIMATIONS
     // ========================================
     function initAnimations() {
