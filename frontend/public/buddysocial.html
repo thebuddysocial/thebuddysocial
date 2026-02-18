@@ -370,6 +370,19 @@
       white-space: nowrap;
       padding: 2rem 0;
       background: var(--green-dark);
+      position: relative;
+    }
+
+    .marquee-container::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--green-dark));
+      pointer-events: none;
+      z-index: 2;
     }
 
     .marquee-content {
