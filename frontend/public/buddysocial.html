@@ -979,12 +979,19 @@
       border-radius: 20px;
       overflow: hidden;
       box-shadow: var(--shadow-strong);
+      cursor: pointer;
     }
 
     @media (min-width: 1024px) {
       .video-wrapper {
         width: 55%;
       }
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .video-wrapper img {
