@@ -22,20 +22,23 @@ Preview the GitHub repo (thebuddysocial/thebuddysocial) netlify-deploy/index.htm
 ### Phase 3 - Carousel
 - Added 5 new event photos interleaved (9 unique, 18 total)
 
-### Phase 4 - Cal.com & Section Revert
-- Reverted section backgrounds to alternating cream/cream-light
+### Phase 4 - Cal.com
 - Embedded Cal.com "Scoping Call 15-mins" widget in Schedule section
 
 ### Phase 5 - Our Why Image & Netlify Deploy
-1. Replaced Our Why stock image with team photo (3 individuals)
-2. Added object-position: 30% center to frame all 3 people properly
-3. Created /app/netlify-deploy/index.html mirroring buddysocial.html for Netlify deployment
+- Replaced Our Why image with team photo, object-position: 30% center
+- Created netlify-deploy/index.html for Netlify deployment
 
-## Deployment Flow
-- Push to GitHub → Netlify reads `netlify-deploy/index.html` → Site deploys
-- Use "Save to Github" feature in Emergent chat to push changes
+### Phase 6 - Video Integration
+- Added TBS Intro video (MP4, 55MB) to Section 3 (Presented By)
+- Replaced stock image thumbnail with actual video player
+- Click-to-play/pause with animated overlay + play button
+- Video starts muted, unmutes on play
+- Synced to netlify-deploy/index.html
+
+## Deployment
+Push to GitHub → Netlify reads `netlify-deploy/index.html` → Site deploys
 
 ## Backlog
-- P0: User to attach video (mentioned upcoming)
 - P1: Replace stock service images
-- P2: Mobile fine-tuning
+- P2: Mobile responsiveness fine-tuning
