@@ -1,26 +1,35 @@
 # PRD - The Buddy Social Live Preview
 
 ## Original Problem Statement
-Preview and iteratively improve The Buddy Social website from GitHub repo.
+Pull GitHub repo (https://github.com/thebuddysocial/thebuddysocial, branch: Version-02) and set up for live editing. Static website for Dublin community events (students & graduates).
 
 ## Architecture
-- Static Site: `buddysocial.html` mirrored to `netlify-deploy/index.html`
-- Deployment: Netlify via GitHub
-- 3rd Party: Cal.com scheduling embed
+- **Frontend**: React app (CRA + Craco) serving `buddysocial.html` via iframe
+- **Backend**: FastAPI (basic status API, mostly unused for static site)
+- **Static Site**: `buddysocial.html` in `/app/frontend/public/` (mirrored to `netlify-deploy/index.html`)
+- **Deployment**: Netlify via GitHub (netlify-deploy/index.html)
+- **3rd Party**: Cal.com scheduling embed, GSAP animations, Font Awesome icons
+
+## Key Files
+- `/app/frontend/public/buddysocial.html` - Main website HTML (served via iframe)
+- `/app/netlify-deploy/index.html` - Netlify deployment version (keep in sync)
+- `/app/frontend/src/App.js` - React wrapper (iframe embed)
+- `/app/frontend/src/App.css` - Minimal CSS for iframe wrapper
 
 ## What's Been Implemented
 
-### Phase 1-5: Foundation (see git history)
+### 2026-01-19 - Repo Pull & Setup
+- Cloned repo from GitHub (Version-02 branch)
+- Copied all files to /app directory structure
+- Frontend and backend services running
+- Website loads correctly with hero section, nav, animations
 
-### Phase 6 (2026-02-19) - Major Content Overhaul
-1. **Section 3**: Stacked typography - SLAINTE (huge green) / to Connections! (italic) / MEET (typewriter) / THE BUDDY SOCIAL (green)
-2. **Section 5 Upcoming Events**: 2-card grid with LinkedIn Over Latte 2 (Mar 2026) + Hire Me Maybe 2 (Apr 2026), "Tickets Coming Soon" badges, event banners
-3. **Section 6 About Us**: Renamed from "Our Why", new text about mentor-led community, "Guidance + Good Vibes + Growth" tagline
-4. **Section 7 History**: Updated text (Founded 2025), 3 LinkedIn links for founders (placeholder URLs)
-5. **Footer**: "every Month" instead of "every Saturday"
-6. **Schedule**: Updated event cards to match new events
+### Previous Phases (from repo history)
+1. Foundation setup (Phases 1-5)
+2. Phase 6 (2026-02-19) - Major content overhaul: section typography, upcoming events cards, about us, history, footer updates
 
-## Pending
+## Pending / Backlog
 - P0: User to share LinkedIn URLs for 3 founders
 - P1: Replace stock service section images
 - P2: Mobile fine-tuning
+- User requested: UI edits (awaiting specifics)
