@@ -1333,132 +1333,134 @@
     }
 
     .upcoming-container {
-      max-width: 1200px;
+      max-width: 1000px;
       margin: 0 auto;
     }
 
-    .upcoming-section-title {
-      font-family: var(--font-display);
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .upcoming-section-title .line1 {
-      display: block;
-      font-size: clamp(3rem, 8vw, 6rem);
-      color: var(--green);
-    }
-
-    .upcoming-section-title .line2 {
-      display: block;
-      font-size: clamp(3rem, 8vw, 6rem);
-      color: var(--green-dark);
-      margin-left: 2rem;
-    }
-
-    .upcoming-events-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    @media (min-width: 768px) {
-      .upcoming-events-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .upcoming-event-card {
+    /* Featured Single Event Card */
+    .upcoming-featured-card {
+      display: flex;
+      flex-direction: column;
       background: white;
-      border-radius: 20px;
+      border-radius: 24px;
       overflow: hidden;
       box-shadow: var(--shadow-premium);
       border: 1px solid rgba(201, 160, 80, 0.1);
       transition: all var(--transition-medium);
     }
 
-    .upcoming-event-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(77, 103, 49, 0.15);
+    @media (min-width: 768px) {
+      .upcoming-featured-card {
+        flex-direction: row;
+      }
     }
 
-    .upcoming-event-card .card-image {
+    .upcoming-featured-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 30px 80px rgba(44, 62, 31, 0.2);
+    }
+
+    .featured-card-image {
       width: 100%;
-      aspect-ratio: 16/9;
+      aspect-ratio: 1/1;
       overflow: hidden;
     }
 
-    .upcoming-event-card .card-image img {
+    @media (min-width: 768px) {
+      .featured-card-image {
+        width: 45%;
+        aspect-ratio: auto;
+        min-height: 420px;
+      }
+    }
+
+    .featured-card-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform var(--transition-slow);
     }
 
-    .upcoming-event-card:hover .card-image img {
+    .upcoming-featured-card:hover .featured-card-image img {
       transform: scale(1.05);
     }
 
-    .upcoming-event-card .card-body {
-      padding: 1.5rem 1.75rem 2rem;
+    .featured-card-body {
+      flex: 1;
+      padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
-    .upcoming-event-card .card-badge {
+    .featured-card-body .card-badge {
       display: inline-block;
-      padding: 0.4rem 1rem;
+      padding: 0.5rem 1.25rem;
       background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
       color: var(--green-dark);
-      font-size: 0.65rem;
+      font-size: 0.7rem;
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       border-radius: 50px;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
       box-shadow: 0 4px 15px rgba(201, 160, 80, 0.25);
+      width: fit-content;
     }
 
-    .upcoming-event-card .card-title {
+    .featured-card-title {
       font-family: var(--font-display);
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-size: clamp(2rem, 4vw, 2.8rem);
       color: var(--green-dark);
-      line-height: 1.1;
-      margin-bottom: 0.5rem;
+      line-height: 1.05;
+      margin-bottom: 1rem;
     }
 
-    .upcoming-event-card .card-date {
+    .featured-card-date {
       font-family: var(--font-display);
       font-size: 1.1rem;
       letter-spacing: 0.1em;
       color: var(--warm-gray);
-      margin-bottom: 1rem;
-    }
-
-    .upcoming-event-card .card-schedule {
-      list-style: none;
       margin-bottom: 1.5rem;
     }
 
-    .upcoming-event-card .card-schedule li {
+    .featured-card-body .card-schedule {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .featured-card-body .card-schedule li {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      padding: 0.4rem 0;
-      font-size: 0.9rem;
+      gap: 0.75rem;
+      padding: 0.6rem 0;
+      font-size: 1rem;
+      font-family: var(--font-accent);
+      font-style: italic;
       color: var(--brown);
       border-bottom: 1px solid rgba(139, 167, 122, 0.1);
     }
 
-    .upcoming-event-card .card-schedule li:last-child {
+    .featured-card-body .card-schedule li:last-child {
       border-bottom: none;
     }
 
-    .upcoming-event-card .card-schedule li::before {
+    .featured-card-body .card-schedule li::before {
       content: '';
-      width: 6px;
-      height: 6px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: var(--green-light);
       flex-shrink: 0;
+    }
+
+    .featured-ticket-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 1.25rem 2rem;
+      font-size: 0.9rem;
+      border-radius: 14px;
+      text-align: center;
     }
 
     /* ========================================
@@ -1693,6 +1695,82 @@
     .history-img:hover img {
       filter: grayscale(0) sepia(0);
       transform: scale(1.05);
+    }
+
+    /* Founder Card Overlay */
+    .founder-card {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .founder-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(44, 62, 31, 0.95) 0%, rgba(44, 62, 31, 0.6) 40%, transparent 70%);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 1.25rem 0.75rem;
+      opacity: 0;
+      transition: opacity var(--transition-medium);
+      text-decoration: none;
+      border-radius: 12px;
+    }
+
+    .founder-card:hover .founder-overlay {
+      opacity: 1;
+    }
+
+    .founder-card:hover img {
+      filter: grayscale(0) sepia(0);
+      transform: scale(1.08);
+    }
+
+    .founder-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      transform: translateY(10px);
+      transition: transform var(--transition-medium);
+    }
+
+    .founder-card:hover .founder-info {
+      transform: translateY(0);
+    }
+
+    .founder-name {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      letter-spacing: 0.1em;
+      color: var(--cream);
+      text-transform: uppercase;
+    }
+
+    .founder-linkedin {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      background: rgba(251, 240, 207, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(251, 240, 207, 0.25);
+      border-radius: 50px;
+      color: var(--cream);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all var(--transition-fast);
+    }
+
+    .founder-card:hover .founder-linkedin:hover {
+      background: rgba(251, 240, 207, 0.3);
+      border-color: rgba(251, 240, 207, 0.5);
+    }
+
+    .founder-linkedin i {
+      font-size: 0.85rem;
     }
 
     .history-content {
@@ -2284,6 +2362,25 @@
     .schedule-container {
       max-width: 1200px;
       margin: 0 auto;
+    }
+
+    .schedule-section-title {
+      font-family: var(--font-display);
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .schedule-section-title .line1 {
+      display: block;
+      font-size: clamp(3rem, 8vw, 6rem);
+      color: var(--cream);
+    }
+
+    .schedule-section-title .line2 {
+      display: block;
+      font-size: clamp(3rem, 8vw, 6rem);
+      color: var(--green-light);
+      margin-left: 2rem;
     }
 
     .schedule-grid {
@@ -2977,49 +3074,25 @@
       </div>
     </section>
 
-    <!-- SECTION 5: UPCOMING EVENTS -->
+    <!-- SECTION 5: UPCOMING EVENT (Single Featured Card) -->
     <section id="section-upcoming" data-testid="upcoming-section">
       <div class="upcoming-container">
-        <h2 class="upcoming-section-title">
-          <span class="line1 reveal">UPCOMING</span>
-          <span class="line2 reveal delay-1">EVENTS</span>
-        </h2>
-
-        <div class="upcoming-events-grid">
-          <!-- Event Card 1 -->
-          <div class="upcoming-event-card reveal-left" data-testid="upcoming-event-1">
-            <div class="card-image">
-              <img src="https://customer-assets.emergentagent.com/job_github-viewer-live/artifacts/prbwili6_TBS%20Event%20Banner%20%282%29.png" alt="LinkedIn Over Latte 2">
-            </div>
-            <div class="card-body">
-              <span class="card-badge">Tickets Coming Soon</span>
-              <h3 class="card-title">LinkedIn Over Latte 2</h3>
-              <p class="card-date">MARCH 2026 &mdash; DATE TBD</p>
-              <ul class="card-schedule">
-                <li>Doors Open / Welcome</li>
-                <li>Icebreakers & Networking</li>
-                <li>LinkedIn Workshop</li>
-                <li>Networking & Coffee</li>
-              </ul>
-            </div>
+        <div class="upcoming-featured-card reveal-scale" data-testid="upcoming-event-featured">
+          <div class="featured-card-image">
+            <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Vision Boarding Event">
           </div>
-
-          <!-- Event Card 2 -->
-          <div class="upcoming-event-card reveal-right delay-1" data-testid="upcoming-event-2">
-            <div class="card-image">
-              <img src="https://customer-assets.emergentagent.com/job_github-viewer-live/artifacts/bogu3mpm_TicketTailor%20header%20image%20%281%29.png" alt="Hire Me Maybe 2">
-            </div>
-            <div class="card-body">
-              <span class="card-badge">Tickets Coming Soon</span>
-              <h3 class="card-title">Hire Me Maybe 2</h3>
-              <p class="card-date">APRIL 2026 &mdash; DATE TBD</p>
-              <ul class="card-schedule">
-                <li>Doors Open / Welcome</li>
-                <li>Icebreakers & Interview Tips</li>
-                <li>Interview Practice</li>
-                <li>Networking & Close</li>
-              </ul>
-            </div>
+          <div class="featured-card-body">
+            <span class="card-badge">Upcoming Event</span>
+            <h3 class="featured-card-title">Goal Setting for 2026:<span style="font-family:var(--font-accent);font-style:italic;color:var(--green);">Vision Boarding</span></h3>
+            <p class="featured-card-date">FEB 28, 2026 &mdash; 2PM</p>
+            <ul class="card-schedule">
+              <li>Warm, easy introductions</li>
+              <li>Guided reflection on 2025</li>
+              <li>Vision Boarding for 2026</li>
+            </ul>
+            <a href="https://www.tickettailor.com/events/thebuddysocial/1986992" target="_blank" rel="noopener" class="btn-primary featured-ticket-btn" data-testid="featured-get-tickets-btn">
+              Get Tickets <i class="fa-solid fa-arrow-right"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -3094,14 +3167,32 @@
     <section id="section-history" data-testid="history-section">
       <div class="history-container">
         <div class="history-images">
-          <div class="history-img reveal-left">
-            <img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/vlgnjnnx_Mentor%202.png" alt="TBS Mentor">
+          <div class="history-img founder-card reveal-left" data-testid="founder-sunetra">
+            <img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/vlgnjnnx_Mentor%202.png" alt="Sunetra">
+            <a href="https://www.linkedin.com/in/sunetra-bhattacharya/" target="_blank" rel="noopener" class="founder-overlay">
+              <div class="founder-info">
+                <span class="founder-name">Sunetra</span>
+                <span class="founder-linkedin"><i class="fa-brands fa-linkedin-in"></i> Connect</span>
+              </div>
+            </a>
           </div>
-          <div class="history-img reveal-left delay-1">
-            <img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/wxzmriii_WhatsApp%20Image%202026-01-03%20at%2018.35.31.jpeg" alt="TBS Workshop">
+          <div class="history-img founder-card reveal-left delay-1" data-testid="founder-aditya">
+            <img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/wxzmriii_WhatsApp%20Image%202026-01-03%20at%2018.35.31.jpeg" alt="Aditya">
+            <a href="https://www.linkedin.com/in/adityabhatnagar1994/" target="_blank" rel="noopener" class="founder-overlay">
+              <div class="founder-info">
+                <span class="founder-name">Aditya</span>
+                <span class="founder-linkedin"><i class="fa-brands fa-linkedin-in"></i> Connect</span>
+              </div>
+            </a>
           </div>
-          <div class="history-img reveal-left delay-2">
-            <img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/mvks0p7z__DSF9101.jpg" alt="TBS Founder">
+          <div class="history-img founder-card reveal-left delay-2" data-testid="founder-shefali">
+            <img src="https://customer-assets.emergentagent.com/job_access-tester-5/artifacts/mvks0p7z__DSF9101.jpg" alt="Shefali">
+            <a href="https://www.linkedin.com/in/shefalitailor/" target="_blank" rel="noopener" class="founder-overlay">
+              <div class="founder-info">
+                <span class="founder-name">Shefali</span>
+                <span class="founder-linkedin"><i class="fa-brands fa-linkedin-in"></i> Connect</span>
+              </div>
+            </a>
           </div>
         </div>
 
@@ -3111,12 +3202,7 @@
             <span class="line2 reveal-right delay-1">HISTORY</span>
           </h2>
           <p class="reveal-right delay-2">Why we started The Buddy Social: Navigating Ireland's tedious career process for grads &mdash; from resumes to real jobs &mdash; shouldn't be lonely. Founded in 2025, we create cosy Dublin spaces where students connect, learn, and grow. Our community helps hundreds find footing in competitive markets.</p>
-          <div class="founder-links reveal-right delay-3" style="display:flex;gap:0.75rem;margin-bottom:2rem;flex-wrap:wrap;">
-            <a href="https://www.linkedin.com/in/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;background:rgba(139,167,122,0.15);border-radius:8px;color:var(--green-dark);font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.3s ease;" onmouseover="this.style.background='rgba(139,167,122,0.3)'" onmouseout="this.style.background='rgba(139,167,122,0.15)'"><i class="fa-brands fa-linkedin-in" style="color:var(--green);"></i> Founder 1</a>
-            <a href="https://www.linkedin.com/in/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;background:rgba(139,167,122,0.15);border-radius:8px;color:var(--green-dark);font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.3s ease;" onmouseover="this.style.background='rgba(139,167,122,0.3)'" onmouseout="this.style.background='rgba(139,167,122,0.15)'"><i class="fa-brands fa-linkedin-in" style="color:var(--green);"></i> Founder 2</a>
-            <a href="https://www.linkedin.com/in/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;background:rgba(139,167,122,0.15);border-radius:8px;color:var(--green-dark);font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.3s ease;" onmouseover="this.style.background='rgba(139,167,122,0.3)'" onmouseout="this.style.background='rgba(139,167,122,0.15)'"><i class="fa-brands fa-linkedin-in" style="color:var(--green);"></i> Founder 3</a>
-          </div>
-          <a href="#footer" class="btn-primary reveal-right delay-4" data-testid="contact-us-btn">
+          <a href="#footer" class="btn-primary reveal-right delay-3" data-testid="contact-us-btn">
             Contact Us
             <i class="fa-solid fa-arrow-right"></i>
           </a>
@@ -3253,6 +3339,10 @@
     <!-- SECTION 11: SCHEDULE -->
     <section id="section-schedule" data-testid="schedule-section">
       <div class="schedule-container">
+        <h2 class="schedule-section-title reveal">
+          <span class="line1">UPCOMING</span>
+          <span class="line2">EVENTS</span>
+        </h2>
         <div class="schedule-grid">
           <!-- Event 1 Schedule -->
           <div class="schedule-card reveal-left">
