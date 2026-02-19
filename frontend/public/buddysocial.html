@@ -1508,7 +1508,27 @@
       .our-why-text-left,
       .our-why-text-right {
         position: relative;
-        display: none;
+        display: none !important;
+      }
+      .our-why-hero {
+        min-height: auto;
+        margin-bottom: 1.5rem;
+      }
+      .about-us-text {
+        opacity: 1 !important;
+        transform: none !important;
+        padding: 0 0.5rem;
+      }
+      .about-us-text p {
+        font-size: 1rem;
+      }
+      .about-us-tagline-wrap,
+      .our-why-stats-header,
+      .stats-divider,
+      .stats-grid,
+      .stat-item {
+        opacity: 1 !important;
+        transform: none !important;
       }
     }
 
@@ -2371,16 +2391,16 @@
     }
 
     .schedule-section-title .line1 {
-      display: block;
+      display: inline;
       font-size: clamp(3rem, 8vw, 6rem);
       color: var(--cream);
     }
 
     .schedule-section-title .line2 {
-      display: block;
+      display: inline;
       font-size: clamp(3rem, 8vw, 6rem);
       color: var(--green-light);
-      margin-left: 2rem;
+      margin-left: 0.3em;
     }
 
     .schedule-grid {
