@@ -1333,132 +1333,134 @@
     }
 
     .upcoming-container {
-      max-width: 1200px;
+      max-width: 1000px;
       margin: 0 auto;
     }
 
-    .upcoming-section-title {
-      font-family: var(--font-display);
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .upcoming-section-title .line1 {
-      display: block;
-      font-size: clamp(3rem, 8vw, 6rem);
-      color: var(--green);
-    }
-
-    .upcoming-section-title .line2 {
-      display: block;
-      font-size: clamp(3rem, 8vw, 6rem);
-      color: var(--green-dark);
-      margin-left: 2rem;
-    }
-
-    .upcoming-events-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    @media (min-width: 768px) {
-      .upcoming-events-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .upcoming-event-card {
+    /* Featured Single Event Card */
+    .upcoming-featured-card {
+      display: flex;
+      flex-direction: column;
       background: white;
-      border-radius: 20px;
+      border-radius: 24px;
       overflow: hidden;
       box-shadow: var(--shadow-premium);
       border: 1px solid rgba(201, 160, 80, 0.1);
       transition: all var(--transition-medium);
     }
 
-    .upcoming-event-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(77, 103, 49, 0.15);
+    @media (min-width: 768px) {
+      .upcoming-featured-card {
+        flex-direction: row;
+      }
     }
 
-    .upcoming-event-card .card-image {
+    .upcoming-featured-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 30px 80px rgba(44, 62, 31, 0.2);
+    }
+
+    .featured-card-image {
       width: 100%;
-      aspect-ratio: 16/9;
+      aspect-ratio: 1/1;
       overflow: hidden;
     }
 
-    .upcoming-event-card .card-image img {
+    @media (min-width: 768px) {
+      .featured-card-image {
+        width: 45%;
+        aspect-ratio: auto;
+        min-height: 420px;
+      }
+    }
+
+    .featured-card-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform var(--transition-slow);
     }
 
-    .upcoming-event-card:hover .card-image img {
+    .upcoming-featured-card:hover .featured-card-image img {
       transform: scale(1.05);
     }
 
-    .upcoming-event-card .card-body {
-      padding: 1.5rem 1.75rem 2rem;
+    .featured-card-body {
+      flex: 1;
+      padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
-    .upcoming-event-card .card-badge {
+    .featured-card-body .card-badge {
       display: inline-block;
-      padding: 0.4rem 1rem;
+      padding: 0.5rem 1.25rem;
       background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
       color: var(--green-dark);
-      font-size: 0.65rem;
+      font-size: 0.7rem;
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       border-radius: 50px;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
       box-shadow: 0 4px 15px rgba(201, 160, 80, 0.25);
+      width: fit-content;
     }
 
-    .upcoming-event-card .card-title {
+    .featured-card-title {
       font-family: var(--font-display);
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-size: clamp(2rem, 4vw, 2.8rem);
       color: var(--green-dark);
-      line-height: 1.1;
-      margin-bottom: 0.5rem;
+      line-height: 1.05;
+      margin-bottom: 1rem;
     }
 
-    .upcoming-event-card .card-date {
+    .featured-card-date {
       font-family: var(--font-display);
       font-size: 1.1rem;
       letter-spacing: 0.1em;
       color: var(--warm-gray);
-      margin-bottom: 1rem;
-    }
-
-    .upcoming-event-card .card-schedule {
-      list-style: none;
       margin-bottom: 1.5rem;
     }
 
-    .upcoming-event-card .card-schedule li {
+    .featured-card-body .card-schedule {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .featured-card-body .card-schedule li {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      padding: 0.4rem 0;
-      font-size: 0.9rem;
+      gap: 0.75rem;
+      padding: 0.6rem 0;
+      font-size: 1rem;
+      font-family: var(--font-accent);
+      font-style: italic;
       color: var(--brown);
       border-bottom: 1px solid rgba(139, 167, 122, 0.1);
     }
 
-    .upcoming-event-card .card-schedule li:last-child {
+    .featured-card-body .card-schedule li:last-child {
       border-bottom: none;
     }
 
-    .upcoming-event-card .card-schedule li::before {
+    .featured-card-body .card-schedule li::before {
       content: '';
-      width: 6px;
-      height: 6px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: var(--green-light);
       flex-shrink: 0;
+    }
+
+    .featured-ticket-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 1.25rem 2rem;
+      font-size: 0.9rem;
+      border-radius: 14px;
+      text-align: center;
     }
 
     /* ========================================
