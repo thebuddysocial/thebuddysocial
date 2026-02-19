@@ -20,16 +20,21 @@ Pull GitHub repo (https://github.com/thebuddysocial/thebuddysocial, branch: Vers
 
 ### 2026-01-19 - Repo Pull & Setup
 - Cloned repo from GitHub (Version-02 branch)
-- Copied all files to /app directory structure
-- Frontend and backend services running
-- Website loads correctly with hero section, nav, animations
+- All services running
+
+### 2026-01-19 - UI Updates (Session 2)
+1. **Section 5 (Upcoming Events)**: Replaced 2-card grid with single featured card matching live site — "Goal Setting for 2026: Vision Boarding" with image-left/content-right layout, Get Tickets CTA
+2. **Schedule Section (2nd last)**: Added "UPCOMING EVENTS" title in cream/green-light on dark green background
+3. **History Section - Founder LinkedIn**: Creative hover overlays on 3 founder images:
+   - Left: Sunetra → linkedin.com/in/sunetra-bhattacharya/
+   - Middle: Aditya → linkedin.com/in/adityabhatnagar1994/
+   - Right: Shefali → linkedin.com/in/shefalitailor/
+   - Hover shows name + glassmorphism "Connect" button with LinkedIn icon
 
 ### Previous Phases (from repo history)
-1. Foundation setup (Phases 1-5)
-2. Phase 6 (2026-02-19) - Major content overhaul: section typography, upcoming events cards, about us, history, footer updates
+- Phase 6 (2026-02-19): Section typography, upcoming events cards, about us, history, footer updates
 
 ## Pending / Backlog
-- P0: User to share LinkedIn URLs for 3 founders
 - P1: Replace stock service section images
 - P2: Mobile fine-tuning
-- User requested: UI edits (awaiting specifics)
+- P2: Update event dates when confirmed
