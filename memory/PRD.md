@@ -13,28 +13,21 @@ Pull GitHub repo (https://github.com/thebuddysocial/thebuddysocial, branch: Vers
 ## Key Files
 - `/app/frontend/public/buddysocial.html` - Main website HTML (served via iframe)
 - `/app/netlify-deploy/index.html` - Netlify deployment version (keep in sync)
-- `/app/frontend/src/App.js` - React wrapper (iframe embed)
-- `/app/frontend/src/App.css` - Minimal CSS for iframe wrapper
 
 ## What's Been Implemented
 
-### 2026-01-19 - Repo Pull & Setup
-- Cloned repo from GitHub (Version-02 branch)
-- All services running
+### Session 1 - Repo Pull & Initial UI (2026-01-19)
+- Cloned repo, services running
+- Section 5: Single featured card ("Goal Setting for 2026: Vision Boarding")
+- Schedule section: Added "UPCOMING EVENTS" title
+- History: Creative hover overlays on founder images (Sunetra, Aditya, Shefali) with LinkedIn links
 
-### 2026-01-19 - UI Updates (Session 2)
-1. **Section 5 (Upcoming Events)**: Replaced 2-card grid with single featured card matching live site — "Goal Setting for 2026: Vision Boarding" with image-left/content-right layout, Get Tickets CTA
-2. **Schedule Section (2nd last)**: Added "UPCOMING EVENTS" title in cream/green-light on dark green background
-3. **History Section - Founder LinkedIn**: Creative hover overlays on 3 founder images:
-   - Left: Sunetra → linkedin.com/in/sunetra-bhattacharya/
-   - Middle: Aditya → linkedin.com/in/adityabhatnagar1994/
-   - Right: Shefali → linkedin.com/in/shefalitailor/
-   - Hover shows name + glassmorphism "Connect" button with LinkedIn icon
-
-### Previous Phases (from repo history)
-- Phase 6 (2026-02-19): Section typography, upcoming events cards, about us, history, footer updates
+### Session 2 - Countdown + Fixes (2026-01-19)
+1. **Countdown Timer**: Live countdown to Feb 28, 2026 2PM in Section 5 featured card — subtle, premium design with days/hrs/min/sec
+2. **Schedule Title**: "UPCOMING EVENTS" now on ONE line (inline spans)
+3. **Mobile About Us Fix**: Forced visibility of about-us-text + all reveal elements on mobile, hidden decorative "About"/"Us" text with `!important`
 
 ## Pending / Backlog
-- P1: Replace stock service section images
-- P2: Mobile fine-tuning
-- P2: Update event dates when confirmed
+- P1: Replace stock service section images with real photos
+- P2: Mobile fine-tuning across all sections
+- P2: Update event dates when confirmed (LinkedIn Over Latte 2, Hire Me Maybe 2)
