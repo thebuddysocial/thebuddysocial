@@ -3585,6 +3585,36 @@
   <!-- JAVASCRIPT -->
   <script>
     // ========================================
+    // COUNTDOWN TIMER - Feb 28, 2026 2:00 PM IST (Dublin)
+    // ========================================
+    (function() {
+      const eventDate = new Date('2026-02-28T14:00:00+00:00').getTime();
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const diff = eventDate - now;
+        if (diff <= 0) {
+          const el = document.getElementById('countdown-timer');
+          if (el) el.parentElement.innerHTML = '<div class="countdown-label" style="opacity:0.9;color:var(--green);">Event is happening now!</div>';
+          return;
+        }
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+        const de = document.getElementById('cd-days');
+        const he = document.getElementById('cd-hours');
+        const me = document.getElementById('cd-mins');
+        const se = document.getElementById('cd-secs');
+        if (de) de.textContent = String(d).padStart(2, '0');
+        if (he) he.textContent = String(h).padStart(2, '0');
+        if (me) me.textContent = String(m).padStart(2, '0');
+        if (se) se.textContent = String(s).padStart(2, '0');
+      }
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    })();
+
+    // ========================================
     // LOADING SCREEN
     // ========================================
     window.addEventListener('load', () => {
