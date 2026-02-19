@@ -1572,19 +1572,20 @@
       .our-why-text-right {
         position: relative;
         display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
       }
       .our-why-hero {
         min-height: auto;
         margin-bottom: 1.5rem;
       }
-      .about-us-text {
-        opacity: 1 !important;
-        transform: none !important;
-        padding: 0 0.5rem;
-      }
-      .about-us-text p {
-        font-size: 1rem;
-      }
+      #section-our-why .reveal,
+      #section-our-why .reveal-left,
+      #section-our-why .reveal-right,
+      #section-our-why .reveal-scale,
+      .about-us-text,
       .about-us-tagline-wrap,
       .our-why-stats-header,
       .stats-divider,
@@ -1592,6 +1593,13 @@
       .stat-item {
         opacity: 1 !important;
         transform: none !important;
+        visibility: visible !important;
+      }
+      .about-us-text {
+        padding: 0 0.5rem;
+      }
+      .about-us-text p {
+        font-size: 1rem;
       }
     }
 
