@@ -4073,14 +4073,7 @@
     }
 
     // Apply text scramble to section titles on hover
-    document.querySelectorAll('.history-title .line2, .services-title .line2').forEach(el => {
-      const fx = new TextScramble(el);
-      const originalText = el.innerText;
-      
-      el.addEventListener('mouseenter', () => {
-        fx.setText(originalText);
-      });
-    });
+    // Text scramble on section titles removed — was causing visual glitch
 
     // ========================================
     // SMOOTH SECTION TRANSITIONS
