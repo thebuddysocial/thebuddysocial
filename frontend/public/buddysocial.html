@@ -1697,6 +1697,82 @@
       transform: scale(1.05);
     }
 
+    /* Founder Card Overlay */
+    .founder-card {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .founder-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(44, 62, 31, 0.95) 0%, rgba(44, 62, 31, 0.6) 40%, transparent 70%);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 1.25rem 0.75rem;
+      opacity: 0;
+      transition: opacity var(--transition-medium);
+      text-decoration: none;
+      border-radius: 12px;
+    }
+
+    .founder-card:hover .founder-overlay {
+      opacity: 1;
+    }
+
+    .founder-card:hover img {
+      filter: grayscale(0) sepia(0);
+      transform: scale(1.08);
+    }
+
+    .founder-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      transform: translateY(10px);
+      transition: transform var(--transition-medium);
+    }
+
+    .founder-card:hover .founder-info {
+      transform: translateY(0);
+    }
+
+    .founder-name {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      letter-spacing: 0.1em;
+      color: var(--cream);
+      text-transform: uppercase;
+    }
+
+    .founder-linkedin {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      background: rgba(251, 240, 207, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(251, 240, 207, 0.25);
+      border-radius: 50px;
+      color: var(--cream);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all var(--transition-fast);
+    }
+
+    .founder-card:hover .founder-linkedin:hover {
+      background: rgba(251, 240, 207, 0.3);
+      border-color: rgba(251, 240, 207, 0.5);
+    }
+
+    .founder-linkedin i {
+      font-size: 0.85rem;
+    }
+
     .history-content {
       flex: 1;
     }
@@ -2286,6 +2362,25 @@
     .schedule-container {
       max-width: 1200px;
       margin: 0 auto;
+    }
+
+    .schedule-section-title {
+      font-family: var(--font-display);
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .schedule-section-title .line1 {
+      display: block;
+      font-size: clamp(3rem, 8vw, 6rem);
+      color: var(--cream);
+    }
+
+    .schedule-section-title .line2 {
+      display: block;
+      font-size: clamp(3rem, 8vw, 6rem);
+      color: var(--green-light);
+      margin-left: 2rem;
     }
 
     .schedule-grid {
