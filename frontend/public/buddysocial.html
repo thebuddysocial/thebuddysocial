@@ -1572,42 +1572,25 @@
         min-height: auto;
         margin-bottom: 1.5rem;
         flex-direction: column;
+        padding-top: 1rem;
       }
       .our-why-text-left,
       .our-why-text-right {
-        position: absolute !important;
+        position: static !important;
+        display: none !important;
+      }
+      .our-why-mobile-title {
         display: block !important;
-        visibility: visible !important;
-        width: auto !important;
-        height: auto !important;
-        overflow: visible !important;
-        font-size: clamp(3.5rem, 14vw, 5rem);
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) !important;
-        z-index: 3;
-        color: var(--cream);
-        text-shadow: 0 2px 20px rgba(44, 62, 31, 0.5);
-        opacity: 0.95;
-        pointer-events: none;
-      }
-      .our-why-text-left {
-        transform: translate(-85%, -80%) !important;
-      }
-      .our-why-text-right {
-        transform: translate(-15%, -20%) !important;
+        font-family: var(--font-display);
+        font-size: clamp(3rem, 12vw, 4.5rem);
+        color: var(--green);
+        text-align: center;
+        line-height: 1;
+        margin-bottom: 1.5rem;
+        letter-spacing: 0.02em;
       }
       .our-why-image {
-        width: 220px;
-      }
-      .our-why-image::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: 16px;
-        background: linear-gradient(180deg, rgba(44,62,31,0.25) 0%, rgba(44,62,31,0.1) 40%, rgba(44,62,31,0.25) 100%);
-        z-index: 2;
-        pointer-events: none;
+        width: 240px;
       }
       #section-our-why .reveal,
       #section-our-why .reveal-left,
@@ -1629,6 +1612,10 @@
       .about-us-text p {
         font-size: 1rem;
       }
+    }
+
+    .our-why-mobile-title {
+      display: none;
     }
 
     .our-why-image {
@@ -3254,6 +3241,7 @@
     <section id="section-our-why" data-testid="our-why-section">
       <div class="our-why-container">
         <div class="our-why-hero">
+          <h1 class="our-why-mobile-title">About Us</h1>
           <span class="our-why-text-left reveal-left">About</span>
           <div class="our-why-image reveal-scale">
             <img src="https://customer-assets.emergentagent.com/job_github-viewer-live/artifacts/5uucd7zh_OurWhy01.jpeg" alt="The Buddy Social Team">
@@ -3573,14 +3561,14 @@
           </div>
         </div>
 
-        <!-- Cal.com Booking Embed replaced with Google Calendar -->
+        <!-- Cal.com Booking Embed -->
         <div class="schedule-booking reveal-scale" data-testid="schedule-booking">
           <div class="schedule-booking-header">
             <h3>BOOK A CALL WITH US</h3>
             <p>Got questions about our events or services? Schedule a quick 15-minute scoping call with the team.</p>
           </div>
           <div class="cal-embed-wrapper" data-testid="cal-embed-wrapper">
-            <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2nHuI3kilBaMQ69030fp9w2Dc3ar0GXNenSlF5o36b0NjShNKxBOw_Oni-HfyDwsKeVqhb4sD0?gv=true" style="border:0;border-radius:16px;" width="100%" height="500" frameborder="0" loading="lazy"></iframe>
+            <div id="cal-embed" style="width:100%;height:100%;overflow:scroll"></div>
           </div>
         </div>
       </div>
@@ -4209,6 +4197,47 @@
       nav.style.transition = 'transform 0.3s ease';
     });
   </script>
-  <!-- Google Calendar embed is inline in HTML, no additional script needed -->
+
+  <!-- Cal.com Embed Script -->
+  <script type="text/javascript">
+    (function (C, A, L) {
+      let p = function (a, ar) { a.q.push(ar); };
+      let d = C.document;
+      C.Cal = C.Cal || function () {
+        let cal = C.Cal;
+        let ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {};
+          cal.q = cal.q || [];
+          d.head.appendChild(d.createElement("script")).src = A;
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api = function () { p(api, arguments); };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+
+    Cal("init", "the-buddy-social", { origin: "https://cal.com" });
+    Cal("inline", {
+      elementOrSelector: "#cal-embed",
+      calLink: "the-buddy-social",
+      layout: "month_view",
+      config: {
+        theme: "dark"
+      }
+    });
+    Cal("ui", {
+      theme: "dark",
+      styles: { branding: { brandColor: "#4D6731" } },
+      hideEventTypeDetails: false,
+      layout: "month_view"
+    });
+  </script>
 </body>
 </html>
