@@ -3561,15 +3561,15 @@
           </div>
         </div>
 
-        <!-- Cal.com Booking Embed -->
+        <!-- Cal.com Booking -->
         <div class="schedule-booking reveal-scale" data-testid="schedule-booking">
           <div class="schedule-booking-header">
             <h3>BOOK A CALL WITH US</h3>
             <p>Got questions about our events or services? Schedule a quick 15-minute scoping call with the team.</p>
           </div>
-          <div class="cal-embed-wrapper" data-testid="cal-embed-wrapper">
-            <div id="cal-embed" style="width:100%;height:100%;overflow:scroll"></div>
-          </div>
+          <button data-cal-link="the-buddy-social" data-cal-config='{"theme":"dark"}' class="btn-primary cal-book-btn" data-testid="cal-book-btn" style="display:inline-flex;align-items:center;gap:0.75rem;padding:1.25rem 3rem;font-size:1rem;border-radius:14px;margin-top:1rem;cursor:pointer;">
+            <i class="fa-regular fa-calendar"></i> Pick a Date & Time
+          </button>
         </div>
       </div>
     </section>
@@ -4224,17 +4224,9 @@
     })(window, "https://app.cal.com/embed/embed.js", "init");
 
     Cal("init", "the-buddy-social", { origin: "https://cal.com" });
-    Cal("inline", {
-      elementOrSelector: "#cal-embed",
-      calLink: "the-buddy-social",
-      config: {
-        theme: "dark"
-      }
-    });
     Cal("ui", {
       theme: "dark",
-      styles: { branding: { brandColor: "#4D6731" } },
-      hideEventTypeDetails: false
+      styles: { branding: { brandColor: "#4D6731" } }
     });
   </script>
 </body>
