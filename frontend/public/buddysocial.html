@@ -1809,6 +1809,74 @@
       cursor: pointer;
     }
 
+    /* Always-visible name tag — frosted glass badge pinned bottom-left */
+    .founder-badge {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.75rem 0.4rem 0.5rem;
+      background: rgba(44, 62, 31, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(251, 240, 207, 0.12);
+      border-radius: 50px;
+      z-index: 5;
+      text-decoration: none;
+      transition: all var(--transition-medium);
+      pointer-events: auto;
+    }
+
+    .founder-badge:hover {
+      background: rgba(44, 62, 31, 0.85);
+      border-color: rgba(251, 240, 207, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(44, 62, 31, 0.4);
+    }
+
+    .founder-badge-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background: rgba(251, 240, 207, 0.15);
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .founder-badge-icon i {
+      font-size: 0.65rem;
+      color: var(--cream);
+    }
+
+    /* Pulse ring on the LinkedIn icon */
+    .founder-badge-icon::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(251, 240, 207, 0.3);
+      animation: badge-pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes badge-pulse {
+      0%, 100% { opacity: 0; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+
+    .founder-badge-name {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--cream);
+      white-space: nowrap;
+    }
+
+    /* Hover overlay — desktop only */
     .founder-overlay {
       position: absolute;
       inset: 0;
@@ -1821,10 +1889,16 @@
       transition: opacity var(--transition-medium);
       text-decoration: none;
       border-radius: 12px;
+      z-index: 4;
     }
 
     .founder-card:hover .founder-overlay {
       opacity: 1;
+    }
+
+    .founder-card:hover .founder-badge {
+      opacity: 0;
+      pointer-events: none;
     }
 
     .founder-card:hover img {
@@ -1877,6 +1951,91 @@
 
     .founder-linkedin i {
       font-size: 0.85rem;
+    }
+
+    /* Mobile founder cards */
+    .founder-mobile-bar {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .founder-badge {
+        display: none;
+      }
+
+      .founder-overlay {
+        display: none;
+      }
+
+      .founder-mobile-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0.65rem 0.75rem;
+        background: linear-gradient(135deg, rgba(44, 62, 31, 0.92) 0%, rgba(77, 103, 49, 0.88) 100%);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 0 0 12px 12px;
+        text-decoration: none;
+        z-index: 5;
+        overflow: hidden;
+      }
+
+      .founder-mobile-bar::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 60%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(251, 240, 207, 0.08), transparent);
+        animation: shimmer 3s ease-in-out infinite;
+      }
+
+      @keyframes shimmer {
+        0% { left: -100%; }
+        100% { left: 200%; }
+      }
+
+      .founder-mobile-name {
+        font-family: var(--font-display);
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
+        color: var(--cream);
+        text-transform: uppercase;
+      }
+
+      .founder-mobile-li {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-family: var(--font-body);
+        font-size: 0.6rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(251, 240, 207, 0.7);
+      }
+
+      .founder-mobile-li i {
+        font-size: 0.75rem;
+        color: var(--cream);
+      }
+
+      .founder-mobile-arrow {
+        color: rgba(251, 240, 207, 0.5);
+        font-size: 0.65rem;
+        margin-left: auto;
+      }
+
+      .founder-card {
+        cursor: pointer;
+      }
     }
 
     .history-content {
