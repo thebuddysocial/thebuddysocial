@@ -4297,87 +4297,40 @@
     // Apply text scramble to section titles on hover
     // Text scramble on section titles removed — was causing visual glitch
 
-    // ========================================
-    // SMOOTH SECTION TRANSITIONS
-    // ========================================
-    gsap.utils.toArray('section').forEach(section => {
-      gsap.from(section, {
-        opacity: 0.8,
-        scrollTrigger: {
-          trigger: section,
-          start: 'top center',
-          end: 'bottom center',
-          scrub: true
-        }
-      });
-    });
-
-    // ========================================
-    // FLOATING SHAPES MOUSE INTERACTION
-    // ========================================
-    const shapes = document.querySelectorAll('.shape');
-    document.addEventListener('mousemove', (e) => {
-      const x = e.clientX / window.innerWidth;
-      const y = e.clientY / window.innerHeight;
-      
-      shapes.forEach((shape, index) => {
-        const speed = (index + 1) * 20;
-        shape.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-      });
-    });
-
-    // ========================================
-    // COUNTER WITH EASING
-    // ========================================
-    function easeOutQuart(t) {
-      return 1 - Math.pow(1 - t, 4);
-    }
-
-    // Enhanced counter animation with easing
-    function animateCounterEased(element, target) {
-      const duration = 2500;
-      const startTime = performance.now();
-      
-      function update(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easedProgress = easeOutQuart(progress);
-        const current = Math.floor(easedProgress * target);
-        
-        element.textContent = current;
-        
-        if (progress < 1) {
-          requestAnimationFrame(update);
-        } else {
-          element.textContent = target;
-        }
-      }
-      
-      requestAnimationFrame(update);
-    }
-
-    // ========================================
-    // FOOTER SOCIAL ICONS ANIMATION
-    // ========================================
-    const socialIcons = document.querySelectorAll('.footer-social a');
-    socialIcons.forEach((icon, index) => {
-      icon.addEventListener('mouseenter', () => {
-        gsap.to(icon, {
-          y: -5,
-          rotation: 360,
-          duration: 0.4,
-          ease: 'back.out(1.7)'
+    // Smooth section transitions
+      gsap.utils.toArray('section').forEach(section => {
+        gsap.from(section, {
+          opacity: 0.8,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top center',
+            end: 'bottom center',
+            scrub: true
+          }
         });
       });
-      
-      icon.addEventListener('mouseleave', () => {
-        gsap.to(icon, {
-          y: 0,
-          rotation: 0,
-          duration: 0.3
+
+      // Footer social icons animation
+      const socialIcons = document.querySelectorAll('.footer-social a');
+      socialIcons.forEach((icon, index) => {
+        icon.addEventListener('mouseenter', () => {
+          gsap.to(icon, {
+            y: -5,
+            rotation: 360,
+            duration: 0.4,
+            ease: 'back.out(1.7)'
+          });
+        });
+        
+        icon.addEventListener('mouseleave', () => {
+          gsap.to(icon, {
+            y: 0,
+            rotation: 0,
+            duration: 0.3
+          });
         });
       });
-    });
+    }); // end deferred GSAP load wrapper
 
     // ========================================
     // NAVBAR HIDE ON SCROLL DOWN
