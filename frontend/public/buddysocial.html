@@ -4202,40 +4202,41 @@
     });
 
     // ========================================
-    // SCROLL-TRIGGERED IMAGE ZOOM
+    // SCROLL-TRIGGERED IMAGE ZOOM (deferred GSAP)
     // ========================================
-    gsap.utils.toArray('.photo-card img, .history-img img, .service-img img').forEach(img => {
-      gsap.fromTo(img, 
-        { scale: 1.2 },
-        {
-          scale: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: img,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true
+    window.addEventListener('load', function() {
+      if (typeof gsap === 'undefined') return;
+      
+      gsap.utils.toArray('.photo-card img, .history-img img, .service-img img').forEach(img => {
+        gsap.fromTo(img, 
+          { scale: 1.2 },
+          {
+            scale: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: img,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: true
+            }
           }
-        }
-      );
-    });
-
-    // ========================================
-    // STAGGERED REVEAL FOR LISTS
-    // ========================================
-    gsap.utils.toArray('.services-list .service-item').forEach((item, index) => {
-      gsap.from(item, {
-        x: -50,
-        opacity: 0,
-        duration: 0.6,
-        delay: index * 0.1,
-        scrollTrigger: {
-          trigger: item,
-          start: 'top 85%',
-          toggleActions: 'play none none none'
-        }
+        );
       });
-    });
+
+      // Staggered reveal for lists
+      gsap.utils.toArray('.services-list .service-item').forEach((item, index) => {
+        gsap.from(item, {
+          x: -50,
+          opacity: 0,
+          duration: 0.6,
+          delay: index * 0.1,
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          }
+        });
+      });
 
     // ========================================
     // TEXT SCRAMBLE EFFECT ON HOVER
