@@ -2975,6 +2975,96 @@
     }
 
     /* ========================================
+       FOOTER CREDIT - Made with love by Adi
+    ======================================== */
+    .footer-credit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1.5rem 0 0;
+      margin-top: 1.5rem;
+      border-top: 1px solid rgba(139, 167, 122, 0.1);
+    }
+
+    .footer-credit-text {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: rgba(251, 240, 207, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all var(--transition-fast);
+    }
+
+    .footer-credit-text:hover {
+      color: rgba(251, 240, 207, 0.9);
+    }
+
+    .footer-credit-heart {
+      display: inline-block;
+      color: #e25555;
+      font-size: 0.9rem;
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.2); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.2); }
+      56% { transform: scale(1); }
+    }
+
+    .footer-credit-name {
+      font-family: var(--font-accent);
+      font-style: italic;
+      font-weight: 600;
+      color: var(--gold);
+      position: relative;
+      transition: all var(--transition-fast);
+    }
+
+    .footer-credit-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      padding: 0.3rem 0.6rem;
+      border-radius: 20px;
+      background: rgba(201, 160, 80, 0.1);
+      border: 1px solid rgba(201, 160, 80, 0.2);
+      transition: all var(--transition-fast);
+    }
+
+    .footer-credit-link:hover {
+      background: rgba(201, 160, 80, 0.2);
+      border-color: rgba(201, 160, 80, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(201, 160, 80, 0.2);
+    }
+
+    .footer-credit-link:hover .footer-credit-name {
+      color: var(--gold-light);
+    }
+
+    .footer-credit-link i {
+      font-size: 0.75rem;
+      color: var(--gold);
+      opacity: 0.8;
+    }
+
+    .footer-credit-role {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(251, 240, 207, 0.4);
+      margin-left: 0.5rem;
+    }
+
+    /* ========================================
        REVEAL ANIMATIONS
     ======================================== */
     .reveal {
@@ -3811,6 +3901,18 @@
         <div class="footer-bottom">
           <p>&copy; 2026 The Buddy Social. All rights reserved.</p>
           <span class="footer-big-text">THE BUDDY SOCIAL</span>
+        </div>
+
+        <!-- Made with love credit -->
+        <div class="footer-credit">
+          <span class="footer-credit-text">
+            Crafted with <span class="footer-credit-heart"><i class="fa-solid fa-heart"></i></span> by
+          </span>
+          <a href="https://www.linkedin.com/in/aditya-bhatnagar-tbs/" target="_blank" rel="noopener" class="footer-credit-link" data-testid="footer-credit-link">
+            <span class="footer-credit-name">Adi</span>
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+          <span class="footer-credit-role">Co-Founder</span>
         </div>
       </div>
     </footer>
