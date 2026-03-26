@@ -2965,9 +2965,47 @@
       }
     }
 
+    .footer-bottom-left {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-bottom-left {
+        justify-content: flex-start;
+      }
+    }
+
     .footer-bottom p {
       font-size: 0.85rem;
       color: rgba(251, 240, 207, 0.5);
+      margin: 0;
+    }
+
+    .footer-bottom-divider {
+      color: rgba(251, 240, 207, 0.3);
+      font-size: 0.85rem;
+    }
+
+    /* Footer legal links */
+    .footer-legal-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .footer-legal-links a {
+      font-size: 0.85rem;
+      color: rgba(251, 240, 207, 0.5);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .footer-legal-links a:hover {
+      color: var(--green-light);
     }
 
     .footer-big-text {
@@ -3459,25 +3497,6 @@
 
     .legal-emoji {
       margin-right: 0.5rem;
-    }
-
-    /* Footer legal links */
-    .footer-legal-links {
-      display: flex;
-      gap: 1.5rem;
-      margin-top: 0.75rem;
-    }
-
-    .footer-legal-links a {
-      font-size: 0.8rem;
-      color: rgba(251, 240, 207, 0.5);
-      text-decoration: none;
-      transition: color var(--transition-fast);
-      cursor: pointer;
-    }
-
-    .footer-legal-links a:hover {
-      color: var(--green-light);
     }
 
     /* ========================================
@@ -4333,10 +4352,13 @@
         </div>
 
         <div class="footer-bottom">
-          <p>&copy; 2026 The Buddy Social. All rights reserved.</p>
-          <div class="footer-legal-links">
-            <a onclick="openLegalModal('privacy')" data-testid="footer-privacy">Privacy Policy</a>
-            <a onclick="openLegalModal('terms')" data-testid="footer-terms">Terms of Service</a>
+          <div class="footer-bottom-left">
+            <p>&copy; 2026 The Buddy Social. All rights reserved.</p>
+            <span class="footer-bottom-divider">|</span>
+            <div class="footer-legal-links">
+              <a onclick="openLegalModal('privacy')" data-testid="footer-privacy">Privacy Policy</a>
+              <a onclick="openLegalModal('terms')" data-testid="footer-terms">Terms of Service</a>
+            </div>
           </div>
           <span class="footer-big-text">THE BUDDY SOCIAL</span>
         </div>
