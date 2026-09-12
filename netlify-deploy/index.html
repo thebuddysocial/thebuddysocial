@@ -3017,6 +3017,318 @@
     }
 
     /* ========================================
+       AI CAREER CHATBOT WIDGET
+    ======================================== */
+    .chat-widget {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9990;
+      font-family: var(--font-body);
+    }
+
+    .chat-toggle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 30px rgba(77, 103, 49, 0.4);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .chat-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 40px rgba(77, 103, 49, 0.5);
+    }
+
+    .chat-toggle i {
+      font-size: 1.5rem;
+      color: var(--cream);
+      transition: transform 0.3s ease;
+    }
+
+    .chat-toggle.active i {
+      transform: rotate(90deg);
+    }
+
+    .chat-toggle-pulse {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--green);
+      animation: chatPulse 2s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes chatPulse {
+      0%, 100% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.3); opacity: 0; }
+    }
+
+    .chat-window {
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 380px;
+      max-width: calc(100vw - 48px);
+      height: 520px;
+      max-height: calc(100vh - 120px);
+      background: var(--cream);
+      border-radius: 24px;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px) scale(0.95);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .chat-window.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+      padding: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .chat-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: rgba(251, 240, 207, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .chat-header-info h4 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--cream);
+      letter-spacing: 0.05em;
+      margin: 0;
+    }
+
+    .chat-header-info p {
+      font-size: 0.75rem;
+      color: rgba(251, 240, 207, 0.7);
+      margin: 0;
+    }
+
+    .chat-close {
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: rgba(251, 240, 207, 0.7);
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .chat-close:hover {
+      color: var(--cream);
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      background: var(--cream-light);
+    }
+
+    .chat-message {
+      max-width: 85%;
+      padding: 0.875rem 1rem;
+      border-radius: 18px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      animation: messageSlide 0.3s ease;
+    }
+
+    @keyframes messageSlide {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-message.user {
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-hover) 100%);
+      color: var(--cream);
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .chat-message.assistant {
+      background: white;
+      color: var(--brown);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .chat-message.assistant a {
+      color: var(--green);
+      text-decoration: underline;
+    }
+
+    .chat-typing {
+      display: flex;
+      gap: 4px;
+      padding: 0.875rem 1rem;
+      background: white;
+      border-radius: 18px;
+      align-self: flex-start;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .chat-typing span {
+      width: 8px;
+      height: 8px;
+      background: var(--green-light);
+      border-radius: 50%;
+      animation: typingDot 1.4s ease-in-out infinite;
+    }
+
+    .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+    .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typingDot {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-6px); }
+    }
+
+    .chat-input-container {
+      padding: 1rem;
+      background: white;
+      border-top: 1px solid rgba(139, 167, 122, 0.1);
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 0.875rem 1rem;
+      border: 1px solid rgba(139, 167, 122, 0.2);
+      border-radius: 24px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+      background: var(--cream-light);
+    }
+
+    .chat-input:focus {
+      border-color: var(--green);
+    }
+
+    .chat-input::placeholder {
+      color: var(--warm-gray);
+    }
+
+    .chat-send {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-hover) 100%);
+      border: none;
+      color: var(--cream);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .chat-send:hover {
+      transform: scale(1.05);
+    }
+
+    .chat-send:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .chat-welcome {
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    .chat-welcome h5 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--green-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .chat-welcome p {
+      font-size: 0.85rem;
+      color: var(--warm-gray);
+      margin-bottom: 1rem;
+    }
+
+    .chat-suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .chat-suggestion {
+      padding: 0.5rem 0.875rem;
+      background: rgba(139, 167, 122, 0.1);
+      border: 1px solid rgba(139, 167, 122, 0.2);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--green-dark);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .chat-suggestion:hover {
+      background: var(--green);
+      color: var(--cream);
+      border-color: var(--green);
+    }
+
+    @media (max-width: 480px) {
+      .chat-widget {
+        bottom: 16px;
+        right: 16px;
+      }
+      
+      .chat-window {
+        width: calc(100vw - 32px);
+        height: calc(100vh - 100px);
+        bottom: 70px;
+        right: -8px;
+      }
+      
+      .chat-toggle {
+        width: 54px;
+        height: 54px;
+      }
+    }
+
+    /* ========================================
        FOOTER CREDIT - Made with love by Adi
     ======================================== */
     .footer-credit {
@@ -3911,19 +4223,19 @@
       <div class="upcoming-container">
         <div class="upcoming-featured-card reveal-scale" data-testid="upcoming-event-featured">
           <div class="featured-card-image">
-            <img src="https://images.unsplash.com/photo-1573497019418-b400bb3ab074?auto=format&fit=crop&w=800&q=80" alt="Hire Me Maybe Event" width="800" height="533" loading="lazy" decoding="async">
+            <img src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=800,height=533/uploads/ub/29fe78f9-3413-40c4-8300-814cf5bda52d.jpg" alt="Ireland 101 Event" width="800" height="533" loading="lazy" decoding="async">
           </div>
           <div class="featured-card-body">
             <span class="card-badge">Upcoming Event</span>
-            <h3 class="featured-card-title">Career Workshop: <span style="font-family:var(--font-accent);font-style:italic;color:var(--green);">Hire Me, Maybe!?</span></h3>
-            <p class="featured-card-date">MAY 30, 2026 &mdash; 1PM - 2PM</p>
+            <h3 class="featured-card-title">Newcomer Session: <span style="font-family:var(--font-accent);font-style:italic;color:var(--green);">Ireland 101</span></h3>
+            <p class="featured-card-date">SEP 26, 2026 &mdash; 1PM - 3PM</p>
             <ul class="card-schedule">
-              <li>Mock interview practice & feedback</li>
-              <li>Hiring trends in Dublin's job market</li>
-              <li>Tips & tricks to land your dream role</li>
+              <li>Jobs, internships & graduate programmes in Ireland</li>
+              <li>CV, LinkedIn & networking essentials</li>
+              <li>Accommodation, transport & money-saving hacks</li>
             </ul>
-            <a href="https://buytickets.at/thebuddysocial/2202667" target="_blank" rel="noopener" class="btn-primary featured-ticket-btn" data-testid="featured-get-tickets-btn">
-              Get Tickets <i class="fa-solid fa-arrow-right"></i>
+            <a href="https://luma.com/ky8glgy6" target="_blank" rel="noopener" class="btn-primary featured-ticket-btn" data-testid="featured-get-tickets-btn">
+              Get Tickets - €7.99 <i class="fa-solid fa-arrow-right"></i>
             </a>
             <!-- Subtle Countdown Timer -->
             <div class="countdown-wrapper" data-testid="event-countdown">
@@ -4383,10 +4695,10 @@
   <!-- JAVASCRIPT -->
   <script>
     // ========================================
-    // COUNTDOWN TIMER - May 30, 2026 1:00 PM IST (Dublin)
+    // COUNTDOWN TIMER - Sep 26, 2026 1:00 PM IST (Dublin)
     // ========================================
     (function() {
-      const eventDate = new Date('2026-05-30T13:00:00+01:00').getTime();
+      const eventDate = new Date('2026-09-26T13:00:00+01:00').getTime();
       function updateCountdown() {
         const now = new Date().getTime();
         const diff = eventDate - now;
@@ -5034,6 +5346,47 @@
     });
   </script>
 
+  <!-- AI CAREER CHATBOT WIDGET -->
+  <div class="chat-widget" id="chat-widget" data-testid="chat-widget">
+    <button class="chat-toggle" id="chat-toggle" aria-label="Open chat">
+      <span class="chat-toggle-pulse"></span>
+      <i class="fa-solid fa-comments"></i>
+    </button>
+    
+    <div class="chat-window" id="chat-window">
+      <div class="chat-header">
+        <div class="chat-avatar">🍀</div>
+        <div class="chat-header-info">
+          <h4>Career Buddy</h4>
+          <p>Your AI assistant for jobs in Ireland</p>
+        </div>
+        <button class="chat-close" id="chat-close" aria-label="Close chat">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-welcome">
+          <h5>Hey there! 👋</h5>
+          <p>I'm your Career Buddy. Ask me anything about jobs, CVs, or life in Ireland!</p>
+          <div class="chat-suggestions">
+            <button class="chat-suggestion" data-msg="How do I write a CV for Ireland?">CV tips</button>
+            <button class="chat-suggestion" data-msg="Tell me about the Ireland 101 event">Next event</button>
+            <button class="chat-suggestion" data-msg="How do I network effectively?">Networking</button>
+            <button class="chat-suggestion" data-msg="Tips for interviews in Dublin">Interviews</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="chat-input-container">
+        <input type="text" class="chat-input" id="chat-input" placeholder="Ask me anything..." autocomplete="off">
+        <button class="chat-send" id="chat-send" aria-label="Send message">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- LEGAL MODALS -->
   <!-- Privacy Policy Modal -->
   <div class="legal-modal-overlay" id="privacy-modal" data-testid="privacy-modal">
@@ -5165,6 +5518,118 @@
       </div>
     </div>
   </div>
+
+  <script>
+    // ========================================
+    // AI CAREER CHATBOT
+    // ========================================
+    const BACKEND_URL = 'https://v2-preview-test.preview.emergentagent.com';
+    let chatSessionId = localStorage.getItem('tbs_chat_session') || null;
+    
+    const chatToggle = document.getElementById('chat-toggle');
+    const chatWindow = document.getElementById('chat-window');
+    const chatClose = document.getElementById('chat-close');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+    const chatSend = document.getElementById('chat-send');
+    const chatSuggestions = document.querySelectorAll('.chat-suggestion');
+    
+    // Toggle chat window
+    chatToggle.addEventListener('click', () => {
+      chatWindow.classList.toggle('open');
+      chatToggle.classList.toggle('active');
+      if (chatWindow.classList.contains('open')) {
+        chatInput.focus();
+      }
+    });
+    
+    chatClose.addEventListener('click', () => {
+      chatWindow.classList.remove('open');
+      chatToggle.classList.remove('active');
+    });
+    
+    // Send message function
+    async function sendMessage(message) {
+      if (!message.trim()) return;
+      
+      // Hide welcome message
+      const welcome = document.querySelector('.chat-welcome');
+      if (welcome) welcome.style.display = 'none';
+      
+      // Add user message
+      addMessage(message, 'user');
+      chatInput.value = '';
+      chatSend.disabled = true;
+      
+      // Show typing indicator
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'chat-typing';
+      typingDiv.innerHTML = '<span></span><span></span><span></span>';
+      chatMessages.appendChild(typingDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      
+      try {
+        const response = await fetch(`${BACKEND_URL}/api/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: message,
+            session_id: chatSessionId
+          })
+        });
+        
+        const data = await response.json();
+        
+        // Save session ID
+        if (data.session_id && !chatSessionId) {
+          chatSessionId = data.session_id;
+          localStorage.setItem('tbs_chat_session', chatSessionId);
+        }
+        
+        // Remove typing indicator
+        typingDiv.remove();
+        
+        // Add assistant message
+        addMessage(data.response, 'assistant');
+      } catch (error) {
+        typingDiv.remove();
+        addMessage("Oops! Something went wrong. Please try again in a moment. 🍀", 'assistant');
+        console.error('Chat error:', error);
+      }
+      
+      chatSend.disabled = false;
+    }
+    
+    function addMessage(text, role) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `chat-message ${role}`;
+      // Simple markdown-like formatting
+      text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+      text = text.replace(/\n/g, '<br>');
+      msgDiv.innerHTML = text;
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    // Event listeners
+    chatSend.addEventListener('click', () => sendMessage(chatInput.value));
+    
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage(chatInput.value);
+      }
+    });
+    
+    // Suggestion buttons
+    chatSuggestions.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const msg = btn.getAttribute('data-msg');
+        sendMessage(msg);
+      });
+    });
+  </script>
 
   <script>
     // Legal Modal Functions
