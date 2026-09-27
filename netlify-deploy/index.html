@@ -3020,6 +3020,7 @@
        AI CAREER CHATBOT WIDGET
     ======================================== */
     .chat-widget {
+      display: none !important;
       position: fixed;
       bottom: 24px;
       right: 24px;
@@ -4223,21 +4224,22 @@
       <div class="upcoming-container">
         <div class="upcoming-featured-card reveal-scale" data-testid="upcoming-event-featured">
           <div class="featured-card-image">
-            <img src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=800,height=533/uploads/ub/29fe78f9-3413-40c4-8300-814cf5bda52d.jpg" alt="Ireland 101 Event" width="800" height="533" loading="lazy" decoding="async">
+            <img src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=800,height=533/uploads/ub/29fe78f9-3413-40c4-8300-814cf5bda52d.jpg" alt="The Career Blueprint Event" width="800" height="533" loading="lazy" decoding="async">
           </div>
           <div class="featured-card-body">
-            <span class="card-badge">Upcoming Event</span>
-            <h3 class="featured-card-title">Newcomer Session: <span style="font-family:var(--font-accent);font-style:italic;color:var(--green);">Ireland 101</span></h3>
-            <p class="featured-card-date">SEP 26, 2026 &mdash; 1PM - 3PM</p>
+            <span class="card-badge">Tickets Available</span>
+            <h3 class="featured-card-title">The <span style="font-family:var(--font-accent);font-style:italic;color:var(--green);">Career Blueprint</span></h3>
+            <p class="featured-card-date">SAT, OCT 17, 2026 &mdash; 1:30 - 4:00 PM</p>
+            <p class="featured-card-date" style="opacity:0.75;font-size:0.9em;">📍 Stoneybatter, Dublin &middot; near the Luas Red Line (exact spot shared after booking)</p>
             <ul class="card-schedule">
-              <li>Jobs, internships & graduate programmes in Ireland</li>
-              <li>CV, LinkedIn & networking essentials</li>
-              <li>Accommodation, transport & money-saving hacks</li>
+              <li>CV & LinkedIn mini-session &mdash; practical, no-fluff guidance</li>
+              <li>Irish job market insights & elevator pitch practice</li>
+              <li>Peer-to-peer CV review & real networking, over coffee</li>
             </ul>
-            <a href="https://luma.com/ky8glgy6" target="_blank" rel="noopener" class="btn-primary featured-ticket-btn" data-testid="featured-get-tickets-btn">
+            <a href="https://buytickets.at/thebuddysocial/2441687" target="_blank" rel="noopener" class="btn-primary featured-ticket-btn" data-testid="featured-get-tickets-btn">
               Get Tickets - €7.99 <i class="fa-solid fa-arrow-right"></i>
             </a>
-            <!-- Subtle Countdown Timer -->
+            <!-- Countdown Timer -->
             <div class="countdown-wrapper" data-testid="event-countdown">
               <div class="countdown-label">Event starts in</div>
               <div class="countdown-timer" id="countdown-timer">
@@ -4541,38 +4543,38 @@
           <span class="line2">EVENTS</span>
         </h2>
         <div class="schedule-grid">
-          <!-- Event 1 Schedule - Ireland 101 -->
+          <!-- Event 1 Schedule - The Career Blueprint -->
           <div class="schedule-card reveal-left">
             <div class="schedule-image">
-              <img src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=600,height=338/uploads/ub/29fe78f9-3413-40c4-8300-814cf5bda52d.jpg" alt="Ireland 101" width="600" height="338" loading="lazy" decoding="async">
+              <img src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=600,height=338/uploads/ub/29fe78f9-3413-40c4-8300-814cf5bda52d.jpg" alt="The Career Blueprint" width="600" height="338" loading="lazy" decoding="async">
               <div class="schedule-badges">
                 <span class="schedule-badge event-num">TICKETS AVAILABLE</span>
                 <span class="schedule-badge day">SATURDAY</span>
               </div>
             </div>
-            <h3 class="schedule-title">Ireland 101 🇮🇪</h3>
+            <h3 class="schedule-title">The Career Blueprint 💼</h3>
             <div class="schedule-divider"></div>
             <div class="schedule-details">
               <div class="schedule-date-block">
-                <p class="month">SEP</p>
-                <p class="day">26</p>
+                <p class="month">OCT</p>
+                <p class="day">17</p>
                 <p class="year">2026</p>
               </div>
               <div class="schedule-times">
                 <div class="schedule-time-row">
-                  <span class="activity">Newcomer Survival Guide</span>
+                  <span class="activity">CV & LinkedIn Mini-Session</span>
                   <span class="time"></span>
                 </div>
                 <div class="schedule-time-row">
-                  <span class="activity">Jobs & Graduate Programmes</span>
+                  <span class="activity">Irish Job Market Insights</span>
                   <span class="time"></span>
                 </div>
                 <div class="schedule-time-row">
-                  <span class="activity">CV & LinkedIn Essentials</span>
+                  <span class="activity">Elevator Pitch Practice</span>
                   <span class="time"></span>
                 </div>
                 <div class="schedule-time-row">
-                  <span class="activity">Life Hacks for Ireland</span>
+                  <span class="activity">Peer CV Review & Networking</span>
                   <span class="time"></span>
                 </div>
               </div>
@@ -4582,9 +4584,9 @@
           <!-- Event 2 Schedule - Social Mixer -->
           <div class="schedule-card reveal-right">
             <div class="schedule-image">
-              <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=600&q=80" alt="Social Mixer - Halloween Edition" width="600" height="338" loading="lazy" decoding="async">
+              <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=600&q=80" alt="Social Mixer" width="600" height="338" loading="lazy" decoding="async">
               <div class="schedule-badges">
-                <span class="schedule-badge event-num">🎃 HALLOWEEN SPECIAL</span>
+                <span class="schedule-badge event-num">✨ SPECIAL EDITION</span>
                 <span class="schedule-badge day">SATURDAY</span>
               </div>
             </div>
@@ -4592,8 +4594,8 @@
             <div class="schedule-divider"></div>
             <div class="schedule-details">
               <div class="schedule-date-block">
-                <p class="month">OCT</p>
-                <p class="day">31</p>
+                <p class="month">NOV</p>
+                <p class="day">28</p>
                 <p class="year">2026</p>
               </div>
               <div class="schedule-times">
@@ -4695,10 +4697,10 @@
   <!-- JAVASCRIPT -->
   <script>
     // ========================================
-    // COUNTDOWN TIMER - Sep 26, 2026 1:00 PM IST (Dublin)
+    // COUNTDOWN TIMER - Oct 17, 2026 1:30 PM IST (Dublin)
     // ========================================
     (function() {
-      const eventDate = new Date('2026-09-26T13:00:00+01:00').getTime();
+      const eventDate = new Date('2026-10-17T13:30:00+01:00').getTime();
       function updateCountdown() {
         const now = new Date().getTime();
         const diff = eventDate - now;
@@ -5371,7 +5373,7 @@
           <p>I'm your Career Buddy. Ask me anything about jobs, CVs, or life in Ireland!</p>
           <div class="chat-suggestions">
             <button class="chat-suggestion" data-msg="How do I write a CV for Ireland?">CV tips</button>
-            <button class="chat-suggestion" data-msg="Tell me about the Ireland 101 event">Next event</button>
+            <button class="chat-suggestion" data-msg="Tell me about the Career Blueprint event">Next event</button>
             <button class="chat-suggestion" data-msg="How do I network effectively?">Networking</button>
             <button class="chat-suggestion" data-msg="Tips for interviews in Dublin">Interviews</button>
           </div>
